@@ -1,2 +1,2 @@
-# ta-mlf
-A repository of reosurces as TA for Machine Learning - Foundations course
+# MLF Notes 
+These are some resources I prepared while being the TA for the course during the 2nd and 3rd term of 2024.
