@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 8</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-8">Week 8</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#introduction-to-optimization">Introduction to Optimization</a></li>
+      <li><a href="#unconstrained-optimization">Unconstrained Optimization</a></li>
+      
+      
+    </ul>
+  </div>
+<h2  id="introduction-to-optimization">Introduction to Optimization</h2>
+<ol>
+<li><p>Three pillars on which Machine Learning stands on: <strong>Linear Algebra</strong>, <strong>Optimization</strong>, and <strong>Probablity &amp; Statistics</strong>.</p></li>
+<li><p>An optimization problem can be either</p>
+<ul>
+<li><p>an <strong><em>unconstrained optimization</em></strong>, or</p></li>
+<li><p>a <strong><em>constrained optimization</em></strong> problem.</p></li>
+</ul></li>
+<li><p>The general form of a constrained optimization problem is to <em>minimize</em> an <strong><em>objective function</em></strong> <span class="math inline">\(f(x)\)</span> subject to some <strong><em>inequality constraints</em></strong> <span class="math inline">\(g_i(x)\le 0\)</span> (for <span class="math inline">\(i=1, 2, \ldots,  k\)</span>) and some <strong><em>equality constraints</em></strong> <span class="math inline">\(h_j(x) = 0\)</span> (for <span class="math inline">\(j=1, 2, \ldots, \ell\)</span>): <span class="math display">\[\begin{array}{lrl} &amp; {\displaystyle \min_{x}} &amp; f(x) \\
+        \text{subject to} &amp;&amp;  g_i(x) \le 0  , \quad i = 1,2\ldots, k \\ 
+       &amp; \text{and} &amp; h_j(x) = 0  , \quad j = 1,2\ldots, \ell 
+   \end{array}\]</span> Here, <span class="math inline">\(x\)</span> is a <span class="math inline">\(d\)</span>-dimensional vector whose components are real numbers: <span class="math inline">\(x\in \mathbb{R}^d\)</span> and <span class="math inline">\(f\)</span> is a real valued function so that <span class="math inline">\(f(x)\in \mathbb{R}\)</span>.</p></li>
+<li><p>The general form of an <strong><em>unconstrained optimization</em></strong> is to <em>minimize</em> an objective function where <span class="math inline">\(x\)</span> is free to vary over the entire <span class="math inline">\(\mathbb{R}^d\)</span>.</p></li>
+<li><p>Maximizing <span class="math inline">\(f(x)\)</span> is equivalent to minimizing <span class="math inline">\(-f(x)\)</span>.</p></li>
+<li><p>A point/vector <span class="math inline">\(x^*\)</span> is said to be a <em><strong>local minimizer</strong></em> of <span class="math inline">\(f(x)\)</span> if <span class="math inline">\(f(x^*)\le f(x)\)</span> for all <span class="math inline">\(x\)</span> is a <em><strong>neighbourhood</strong></em> of <span class="math inline">\(x^*\)</span>.</p></li>
+<li><p>A point <span class="math inline">\(x^*\)</span> is said to be a <strong><em>global minimizer</em></strong> of <span class="math inline">\(f(x)\)</span> if <span class="math inline">\(f(x^*)\le f(x)\)</span> for all <span class="math inline">\(x \in \text{dom }( f)\)</span>.</p></li>
+<li><p>Given a real-valued function <span class="math inline">\(f\)</span>, the notation <span class="math inline">\(\mathop{\mathrm{arg\,min}}f(x)\)</span> denotes the argument (a point in the domain of <span class="math inline">\(f\)</span>) that minimizes the function <span class="math inline">\(f\)</span>, assuming such a point is unique.</p></li>
+</ol>
+<h2  id="unconstrained-optimization">Unconstrained Optimization</h2>
+<ol>
+<li><p>If for a point <span class="math inline">\(x^*\)</span> in the domain of <span class="math inline">\(f\)</span>, it is found that</p>
+<ul>
+<li><p><span class="math inline">\(\nabla f(x^*)=0\)</span>, and</p></li>
+<li><p>the <span class="math inline">\(\det H(x^*) &gt; 0\)</span>, where <span class="math inline">\(H(x)\)</span> is the <strong><em>Hessian</em></strong> matrix evaluated at <span class="math inline">\(x\)</span>,</p></li>
+</ul>
+<p>then <span class="math inline">\(x^*\)</span> is a local minimizer of <span class="math inline">\(f\)</span>.</p></li>
+<li><p>The direction of <span class="math inline">\(\nabla f(x)\)</span> is the direction of the <em><strong>steepest ascent</strong></em>, while the direction of <span class="math inline">\(-\nabla f(x)\)</span> is the direction of the <em><strong>steepest descent</strong></em> at some point <span class="math inline">\(x\)</span> in the domain of <span class="math inline">\(f\)</span>.</p></li>
+<li><p><strong>Gradient Descent:</strong> For unconstained optimization, an important method to find a local minimizer is the gradient descent method (also referred as the <em>steepest descent method</em>) which, starting from an initial point <span class="math inline">\(x_0\)</span>, iteratively moves through a sequence of points <span class="math inline">\(x_0\)</span>, <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(\ldots\)</span> in such a way that finally a local minimizer is found as the limit of the sequence <span class="math inline">\(\{x_0, x_1, x_2, \ldots\}\)</span>.</p></li>
+<li><p>The point <span class="math inline">\(x_k\)</span> obtained after the <span class="math inline">\(k\)</span>-th iteration is obtained as <span class="math display">\[x_k = x_{k-1} -\eta_k \nabla f(x_{k-1})\]</span> where <span class="math inline">\(\eta_k\)</span> is the <strong><em>step size</em></strong> chosen during the <span class="math inline">\(k\)</span>-th iteration.</p></li>
+<li><p>A suitable choice of <span class="math inline">\(\eta_k\)</span> is important for the method of gradient descent to converge. If <span class="math inline">\(\eta_k\)</span> is too large, the algorithm might end up oscillating about the local minimizer; if <span class="math inline">\(\eta_k\)</span> is too small, the process might become too slow.</p></li>
+<li><p>A suitable choice for the step size during the <span class="math inline">\(k\)</span>-th step can be found as <span class="math display">\[\eta_k = \mathop{\mathrm{arg\,min}}_{\eta \ge 0}  f\left(x_{k-1} -\eta \nabla f(x_{k-1})\right)\]</span></p></li>
+<li><p>In practice, we can work with a <em><em>constant</em></em> step size chosen suitably.</p></li>
+</ol>
+</div>
+<footer class="mt-auto" style="font-size: 0.9rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

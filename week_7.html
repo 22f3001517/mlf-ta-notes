@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 7</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-7">Week 7</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#principal-component-analysis">Principal Component Analysis</a></li>
+      
+      
+    </ul>
+  </div>
+<h2  id="principal-component-analysis">Principal Component Analysis</h2>
+<ol>
+<li><p>The <strong><em>Principal Component Analysis</em></strong> (PCA) tries to find out the directions along which the <em>projected</em> data has <strong><em>maximum variance</em></strong>, which are the same directions along which the <strong><em>minimum reconstruction error</em></strong> occurs.</p></li>
+<li><p>In order to perform PCA on a dataset <span class="math inline">\(\mathcal{D} = \{ x_1, x_2, \ldots, x_n\}\)</span> where each of the datapoint is a <span class="math inline">\(d\)</span>-dimensional vector, the following steps can be done:</p>
+<ul>
+<li><p>Find the mean vector <span class="math inline">\(\bar{x}\)</span> of the dataset: <span class="math display">\[\bar{x} = \dfrac{x_1 + x_2 + \ldots + x_n }{n}\]</span></p></li>
+<li><p>Form the data matrix: <span class="math display">\[X = \begin{bmatrix}
+               \vert &amp; \vert &amp; &amp; \vert \\
+             x_1-\bar{x} &amp; x_2 - \bar{x} &amp; \ldots &amp; x_n -\bar{x}  \\
+            \vert &amp; \vert &amp; &amp; \vert
+       \end{bmatrix}\]</span></p></li>
+<li><p>Obtain the <em><strong>covariance matrix</strong></em>: <span class="math display">\[C = \dfrac{1}{n} XX^T = \dfrac{1}{n} \sum_{i=1}^n (x_i-\bar{x}) (x_i-\bar{x})^T\]</span></p></li>
+<li><p>Find the eigenvalues of <span class="math inline">\(C\)</span> and arrange them in the descending order: <span class="math display">\[\lambda_1 \ge \lambda_2 \ge \ldots \ge \lambda_d\]</span> and the associated <em>unit</em> eigenvectors <span class="math inline">\(u_1\)</span>, <span class="math inline">\(u_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(u_d\)</span>.</p></li>
+<li><p>The eigenvector <span class="math inline">\(u_1\)</span> associated with the greatest eigenvalue <span class="math inline">\(\lambda_1\)</span> is referred to as the <strong><em>first principal component</em></strong>, the vector <span class="math inline">\(u_2\)</span> associated with the eigenvalue <span class="math inline">\(\lambda_2\)</span> is called the <strong><em>second principal component</em></strong> and so on.</p></li>
+</ul></li>
+<li><p>The principal components are <em><strong>orthogonal</strong></em> to each other.</p></li>
+<li><p>The projection <span class="math inline">\(z_i\)</span> of the datapoint <span class="math inline">\(x_i\)</span>, onto an <span class="math inline">\(m\)</span>-dimensional subspace, where <span class="math inline">\(m&lt;d\)</span>, is obtained as follows: <span class="math display">\[z_i = \sum_{j=1}^m (x_i^Tu_j)u_j  + \sum_{j=m+1}^d (\bar{x}^Tu_j)u_j\]</span> for each <span class="math inline">\(i=1, 2, \ldots n\)</span>.</p></li>
+<li><p>The projection <span class="math inline">\(z_i\)</span> of the datapoint <span class="math inline">\(x_i\)</span>, onto the <em>first principal component</em> <span class="math inline">\(u_1\)</span>, is obtained as follows: <span class="math display">\[z_i = (x_i^Tu_1)u_1  + \sum_{j=2}^d (\bar{x}^Tu_j)u_j\]</span></p></li>
+<li><p>The <strong><em>reconstruction error</em></strong> is <span class="math display">\[J = \dfrac{1}{n}\sum_{i=1}^n \Vert x_i -z_i \Vert^2\]</span></p></li>
+<li><p>The <em><strong>variance</strong></em> of the <em>projected</em> data along the <span class="math inline">\(i\)</span>-th principal component is equal to the corresponding eigenvalue <span class="math inline">\(\lambda_i\)</span>.</p></li>
+<li><p>If the dataset is very <em><strong>high dimensional</strong></em>, so that <span class="math inline">\(d \gg n\)</span>, PCA can still be efficiently implementing by considering <span class="math display">\[C = \dfrac{1}{n} X^TX\]</span> which is of size <span class="math inline">\(n\times n\)</span>, instead of the <span class="math inline">\(d\times d\)</span> matrix <span class="math inline">\(C=\dfrac{1}{n}XX^T\)</span>.</p></li>
+</ol>
+</div>
+<footer class="mt-auto" style="font-size: 0.9rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

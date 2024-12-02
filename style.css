@@ -1,0 +1,143 @@
+/* Base styling */
+.merriweather-light {
+  font-family: "Merriweather", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.merriweather-regular {
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.merriweather-bold {
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.merriweather-black {
+  font-family: "Merriweather", serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.merriweather-light-italic {
+  font-family: "Merriweather", serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.merriweather-regular-italic {
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.merriweather-bold-italic {
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.merriweather-black-italic {
+  font-family: "Merriweather", serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+body {
+  font-family: 'Latin Modern Roman', 'Merriweather', 'Arial', sans-serif; /* Compatible with math rendering */
+  background-color: #f9f9f9; /* Light gray background for readability */
+  color: #111; /* Dark text color for contrast */
+  margin: 0;
+  padding: 0;
+  font-size: 1.5rem; /* Slightly larger text size */
+  line-height: 1.8; /* Comfortable line height */
+}
+
+/* Styling for headings */
+h1, h2, h3 {
+  color: #004085; /* Dark blue for headings */
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  text-align: center; /* Center headings */
+}
+
+h1 {
+  font-size: 2.5rem; /* Large font for main title */
+}
+
+h2 {
+  font-size: 2rem; /* Medium font for section titles */
+}
+
+h3 {
+  font-size: 1.75rem; /* Smaller font for subsections */
+}
+
+/* Styling for paragraphs and lists */
+p, li {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  /*text-align: justify; /* Justify text for a clean look */
+}
+
+ul, ol {
+  padding-left: 40px; /* Indent lists */
+}
+
+/* Highlighting math */
+.math, .math-inline {
+  font-family: 'Latin Modern Roman', 'Times New Roman', serif; /* Roman font for math */
+  font-size: 1.15em; /* Slightly larger font size for equations */
+  color: #007bff; /* Blue for math expressions */
+}
+
+.math-display {
+  display: block;
+  text-align: center; /* Center display equations */
+  margin: 1em 0; /* Add space around equations */
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Clean table borders */
+  margin: 1.5em 0; /* Add space around tables */
+  font-size: 1.25rem;
+}
+
+th, td {
+  border: 1px solid #ddd; /* Light gray border */
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f1f1f1; /* Light gray background for header */
+  font-weight: bold;
+}
+
+/* Highlight links */
+a {
+  color: #0056b3; /* Blue for links */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+/* Add padding and responsive containers */
+.container {
+  max-width: 960px;
+  margin: 0 auto; /* Center the container */
+  padding: 50px;
+  background-color: #ffffff; /* White background for content */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 8px; /* Rounded corners */
+}
+

@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 4</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-4">Week 4</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#linear-polynomial-regression">Linear and Polynomial Regression</a></li>
+      <li><a href="#eigenvalues-eigenvectors">Eigenvalues and Eigenvectors</a></li>
+      <li><a href="#diagonalization">Diagonalization</a></li>
+    </ul>
+  </div>
+<h2  id="linear-polynomial-regression">Linear &amp; Polynomial Regression</h2>
+<ol>
+<li><p>Given a dataset <span class="math display">\[\mathcal{D} = \{(x_1, y_1), (x_2, y_2), (x_3, y_3), \ldots, (x_n, y_n)\}\]</span> of data points <span class="math inline">\(x_i \in \mathbb{R}^d\)</span> and the corresponding labels <span class="math inline">\(y_i \in \mathbb{R}\)</span>, a <em><strong>linear regression</strong></em> is a model that predicts a label <span class="math inline">\(\hat{y}_i\)</span> for each input vector <span class="math inline">\(x_i\)</span> by a relation: <span class="math display">\[\hat{y}_i = x_i^Tw + b, \quad i=1, 2, \ldots , n\]</span> where <span class="math inline">\(w = [w_1\ w_2\ \ldots \ w_d]^T\)</span> is a <span class="math inline">\(d\)</span> dimensional <em>weight</em> vector.</p></li>
+<li><p>Introduce a constant feature 1 to each of the data point and construct a <em>data matrix</em> <span class="math inline">\(A\)</span> of size <span class="math inline">\(n \times (d+1)\)</span>, where each row is one data-point (the last column being all ones): <span class="math display">\[A = \begin{bmatrix} \rule[.2ex]{1em}{0.2pt} &amp; x_1^T &amp; \rule[.2ex]{1em}{0.2pt} &amp; 1 \\ \rule[.2ex]{1em}{0.2pt} &amp; x_2^T &amp; \rule[.2ex]{1em}{0.2pt} &amp; 1 \\ &amp; \vdots &amp; &amp; 1 \\ \rule[.2ex]{1em}{0.2pt} &amp; x_n^T &amp; \rule[.2ex]{1em}{0.2pt} &amp; 1 \end{bmatrix}\]</span></p></li>
+<li><p>Similarly, redefine the weight vector to a <span class="math inline">\((d+1)\)</span>-dimensional vector: <span class="math display">\[w = [ w_1 \ w_2\ \ldots \ w_d \ b]^T\]</span></p></li>
+<li><p>With these modifications, the predictions for all the <span class="math inline">\(n\)</span> data-points can be written in a combined form as <span class="math inline">\(Aw\)</span>.</p></li>
+<li><p>If <span class="math inline">\(y = [y_1\ y_2\ \ldots \ y_n]^T\)</span> be the <span class="math inline">\(n\times 1\)</span> column vector of the actual labels, the problem is to find the best (in the least square sense) solution <span class="math inline">\(w\)</span> of the equation <span class="math display">\[Aw = y\]</span></p></li>
+<li><p>The optimum solution is obtained by solving the <em>normal equation</em>: <span class="math display">\[A^TAw = A^T y\]</span></p></li>
+<li><p>In case, <span class="math inline">\(A^TA\)</span> is invertible, the optimum solution <span class="math display">\[\hat{w} = (A^TA)^{-1}A^Ty\]</span></p></li>
+<li><p>In case, <span class="math inline">\(A^TA\)</span> is not invertible, we need to replace <span class="math inline">\((A^TA)^{-1}\)</span> with the <strong><em>pseudo inverse</em></strong> <span class="math inline">\((A^TA)^\dagger\)</span>.</p></li>
+<li><p><strong>Polynomial regression</strong>: Transform the features of the data-points via a feature map <span class="math inline">\(\phi\)</span> which takes as input the features and produces all possible powers and combination of powers of features upto degree <span class="math inline">\(p\)</span> and then perform linear regression in the transformed feature space. The result is same as that of the linear regression except for the fact that the data matrix <span class="math inline">\(A\)</span> now contains as its rows <span class="math inline">\(\phi (x_i)^T\)</span>, <span class="math inline">\(x_i\)</span> being the <span class="math inline">\(i\)</span>-th data point.</p></li>
+<li><p><strong>Linear regression with regularization</strong>: The loss function for the <em>regularized linear regession</em>, also known as the <strong><em>ridge regression</em></strong> is given by <span class="math display">\[L(w) = \dfrac{1}{2} \left(\Vert Ax-y\Vert^2 + \lambda \Vert w\Vert^2\right)\]</span> Minimizing the loss function for the optimum weight <span class="math inline">\(\hat{w}\)</span> leads to solving the equation <span class="math display">\[(A^TA+\lambda I)\hat{w} = A^T y\]</span> which gives <span class="math display">\[\hat{w} = (A^TA+\lambda I)^{-1} A^T y\]</span></p>
+<ul>
+<li><p>Too small value of <span class="math inline">\(\lambda\)</span> leads to <em><strong>overfitting</strong></em>. (It is almost no regularizaton)</p></li>
+<li><p>Too large value of <span class="math inline">\(\lambda\)</span> leads to <em><strong>underfitting</strong></em>.</p></li>
+</ul></li>
+</ol>
+<h2  id="eigenvalues-eigenvectors">Eigenvalues &amp; Eigenvectors</h2>
+<ol>
+<li><p>Given a <em>square</em> matrix <span class="math inline">\(A\)</span>, an <strong><em>eigenvalue</em></strong> <span class="math inline">\(\lambda\)</span> is a scalar so that for some vector <span class="math inline">\(x\)</span>, the equation <span class="math display">\[Ax =\lambda x\]</span> is satisfied. The corresponding vector <span class="math inline">\(x\)</span> is known as an <strong><em>eigenvector</em></strong>.</p></li>
+<li><p>The eigenvalues can be obtained by solving the <em><strong>characteristic equation</strong></em> <span class="math display">\[\det(A-\lambda I)=0\]</span> For a matrix <span class="math inline">\(A\)</span> of size <span class="math inline">\(n\times n\)</span>, this is a polynomial equation in <span class="math inline">\(\lambda\)</span> of degree <span class="math inline">\(n\)</span>. Its <span class="math inline">\(n\)</span> roots are the eigenvalues of <span class="math inline">\(A\)</span>.</p></li>
+<li><p>The eigenvectors are the solutions of the equation <span class="math display">\[(A-\lambda I)x =0\]</span> That is to say that the eigenvectors lie in the null space of the matrix <span class="math inline">\((A-\lambda I)\)</span>, for each <span class="math inline">\(\lambda\)</span>.</p></li>
+<li><p>Geometrically, eigenvectors are vectors whose direction doesn’t change when they are multiplied by <span class="math inline">\(A\)</span>. They are only <em>stretched</em> by a stretching factor <span class="math inline">\(\lambda\)</span>.</p></li>
+<li><p>For matrices that are diagonal, upper triangular or lower triangular, the eigenvalues are the entries on the main diagonal.</p></li>
+<li><p>Eigenvalues of <strong><em>similar</em></strong> matrices are exactly the same.</p></li>
+<li><p>If <span class="math inline">\(\lambda\)</span> is an eigenvalue of <span class="math inline">\(A\)</span> with an eigenvector <span class="math inline">\(v\)</span>, then <span class="math inline">\(\lambda^k\)</span> is an eigenvalue of <span class="math inline">\(A^k\)</span> with the same eigenvector <span class="math inline">\(v\)</span>. In addition, if <span class="math inline">\(A\)</span> is invertible, then <span class="math inline">\(\lambda^{-1}\)</span> (that is <span class="math inline">\(1/\lambda\)</span>) is an eigenvalue of <span class="math inline">\(A^{-1}\)</span> with the same eigenvector.</p></li>
+<li><p>Eigenvalues of <span class="math inline">\(A^T\)</span> are same as those of <span class="math inline">\(A\)</span>. However, the eigenvectors are <em><strong>not</strong></em> the same.</p></li>
+<li><p>If <span class="math inline">\(\lambda_1\)</span>, <span class="math inline">\(\lambda_2\)</span>, …, <span class="math inline">\(\lambda_n\)</span> be the <span class="math inline">\(n\)</span> eigenvalues of <span class="math inline">\(A\)</span>, then <span class="math display">\[\begin{aligned}
+\lambda_1 +\lambda_2 + \ldots + \lambda_n &amp; = &amp; \mathrm{trace}(A) \\
+\lambda_1 \lambda_2  \cdots  \lambda_n &amp; =&amp; \det (A)\end{aligned}\]</span></p></li>
+<li><p>A <em><strong>symmetric</strong></em> matrix has all its eigenvalues <strong><em>real</em></strong>.</p></li>
+<li><p>Eigenvectors associated with <em><strong>distinct</strong></em> eigenvalues are <strong><em>independent</em></strong>.</p></li>
+</ol>
+<h2  id="diagonalization">Diagonalization</h2>
+<ol>
+<li><p>A square matrix <span class="math inline">\(A\)</span> is said to be <em><strong>diagonalizable</strong></em> if there exists an <em>invertible</em> matrix <span class="math inline">\(P\)</span> such <span class="math display">\[P^{-1} A P = \Lambda,\]</span> a diagonal matrix.</p></li>
+<li><p>For a square matrix <span class="math inline">\(A\)</span> of size <span class="math inline">\(n\times n\)</span>, if the <span class="math inline">\(n\)</span> <em>eigenpairs</em> are <span class="math inline">\((\lambda_1, v_1)\)</span>, <span class="math inline">\((\lambda_2, v_2)\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\((\lambda_n, v_n)\)</span>, form a matrix <span class="math inline">\(P\)</span> be formed by taking as its columns the vectors <span class="math inline">\(v_1\)</span>, <span class="math inline">\(v_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(v_n\)</span>, respectively: <span class="math display">\[P = \begin{bmatrix}
+\mid &amp; \mid &amp; \cdots &amp; \mid \\ 
+v_1 &amp; v_2 &amp; \cdots &amp; v_n \\  
+\mid &amp; \mid &amp; \cdots &amp; \mid
+\end{bmatrix}\]</span> This matrix <span class="math inline">\(P\)</span> <em><strong>diagonalizes</strong></em> the matrix <span class="math inline">\(A\)</span>, that is, the product <span class="math inline">\(P^{-1}AP\)</span> is a diagonal matrix whose diagonal entries are the corresponding eigenvalues: <span class="math display">\[P^{-1}AP = \Lambda = \begin{bmatrix} \lambda_1 &amp;  &amp; &amp; \\ &amp; \lambda_2 &amp; &amp;  \\ 
+ &amp; &amp; \ddots \\ &amp; &amp; &amp; \lambda_n\end{bmatrix}\]</span></p></li>
+<li><p>Conversely, given matrix <span class="math inline">\(P\)</span> and the diagonal matrix <span class="math inline">\(\Lambda\)</span>, we can construct the matrix <span class="math inline">\(A\)</span> as <span class="math display">\[A = P\Lambda P^{-1}\]</span></p></li>
+<li><p>The diagonalizing matrix <span class="math inline">\(P\)</span> is <em><strong>not unique</strong></em>.</p></li>
+<li><p>Not all matrices possess <span class="math inline">\(n\)</span> linearly independent eigenvectors, so <em><strong>not all matrices are diagonalizable</strong></em>.</p></li>
+<li><p>If <span class="math inline">\(A\)</span> is diagonalized by <span class="math inline">\(P\)</span>, so that <span class="math inline">\(A = P \Lambda P^{-1}\)</span>, then for any <em>integer</em> <span class="math inline">\(k\)</span>: <span class="math display">\[A^k = P \Lambda^k P^{-1}\]</span></p></li>
+<li><p>A real matrix <span class="math inline">\(Q\)</span> is said to be <em><strong>orthogonal</strong></em> if and only if <span class="math display">\[Q^TQ=I \Rightarrow Q^{-1} = Q^T.\]</span></p></li>
+<li><p>The columns of an orthogonal matrix are <em><strong>orthonormal</strong></em>.</p></li>
+<li><p>If <span class="math inline">\(A\)</span> is <em>real and symmetric matrix</em> (<span class="math inline">\(A^T=A\)</span>), then:</p>
+<ul>
+<li><p>Eigenvalues of <span class="math inline">\(A\)</span> are real.</p></li>
+<li><p>Eigenvectors associated with <em>distinct</em> eigenvalues are <em><strong>orthogonal</strong></em>.</p></li>
+<li><p><span class="math inline">\(A\)</span> is <em><strong>orthogonally diagonalizable</strong></em>, that is, <span class="math inline">\(\exists\)</span> an orthogonal matrix <span class="math inline">\(Q\)</span> such that <span class="math inline">\(A=Q\Lambda Q^T\)</span> for a diagonal matrix <span class="math inline">\(\Lambda\)</span>. The matrix <span class="math inline">\(Q\)</span> contains, as its columns, the normalized eigenvectors of <span class="math inline">\(A\)</span>.</p></li>
+</ul></li>
+</ol>
+</div>
+<footer class="mt-auto" style="font-size: 0.9rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

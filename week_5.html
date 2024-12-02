@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 5</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-5">Week 5</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#complex-numbers-complex-vectors">Complex Numbers and Complex Vectors</a></li>
+      <li><a href="#hermitian-unitary-matrices">Hermitian and Unitary Matrices</a></li>
+      
+    </ul>
+  </div>
+<h2  id="complex-numbers-complex-vectors">Complex Numbers &amp; Complex Vectors</h2>
+<ol>
+<li><p>A complex number is of the form <span class="math inline">\(z=a+ib\)</span>, where <span class="math inline">\(a, b\in \mathbb{R}\)</span> and <span class="math inline">\(i=\sqrt{-1}\)</span> is the imaginary unit. The set of complex numbers is <span class="math inline">\(\mathbb{C}\)</span>.</p></li>
+<li><p>For every complex number <span class="math inline">\(z\)</span>, it’s modulus <span class="math inline">\(\vert z\vert = \sqrt{a^2+b^2}\)</span> and <span class="math inline">\(\arg (z) = \tan^{-1}\dfrac{b}{a}\)</span>.</p></li>
+<li><p>For <span class="math inline">\(z=a+ib\)</span>, the complex conjugate is obtained by replacing <span class="math inline">\(i\)</span> with <span class="math inline">\(-i\)</span>, that is <span class="math inline">\(\bar{z} =a-i b\)</span>.</p></li>
+<li><p><strong>Complex vector:</strong> An <span class="math inline">\(n\)</span>-dimensional complex vector is an <span class="math inline">\(n\times 1\)</span> matrix whose entries are complex numbers: <span class="math display">\[x = [x_1\ x_2\ \ldots \ x_n]^T \quad \text{ for } x_i \in \mathbb{C}\]</span> This complex vector <span class="math inline">\(x\in \mathbb{C}^n\)</span>.</p></li>
+<li><p><strong>Inner product:</strong> For complex vectors <span class="math inline">\(x, y \in \mathbb{C}^n\)</span>, the inner product of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is defined as <span class="math inline">\(\langle x, y \rangle = \bar{x}^T y\)</span>. Notice, that it is not commutative. Infact, <span class="math inline">\(\langle y, x \rangle = \overline{ \langle x, y \rangle}\)</span>.</p></li>
+<li><p><strong>Norm of a complex vector:</strong> For the vector <span class="math display">\[x = [x_1\ x_2\ \ldots \ x_n]^T \in \mathbb{C}^n,\]</span> the norm is defined as <span class="math display">\[\Vert x \Vert = \sqrt { \langle x, x\rangle}\]</span> which gives the working rule as <span class="math display">\[\Vert x \Vert^2 = \vert x_1 \vert^2 +  \vert x_2 \vert^2 + \ldots +  \vert x_n \vert^2\]</span></p></li>
+<li><p>For a square complex matrix <span class="math inline">\(A\)</span>, its <em><strong>conjugate transpose</strong></em>, denoted by <span class="math inline">\(A^*\)</span> is obtained by taking the complex conjugate of every element and then transposing the matrix.</p></li>
+</ol>
+<h2  id="hermitian-unitary-matrices">Hermitian &amp; Unitary Matrices</h2>
+<ol>
+<li><p>A square complex matrix <span class="math inline">\(A\)</span> is said to be <em><strong>Hermtian</strong></em>, if and only if <span class="math inline">\(A^* = A\)</span>. (The corresponding real analogue would be <em>symmetric</em> matrix.)</p></li>
+<li><p>In a Hermitian matrix, the diagonal entries are purely real and positions that are symmetrical with respect to the main diagonal contain entires that are complex conjugate of each other.</p></li>
+<li><p>All eigenvalues of a Hermitian matix are real.</p></li>
+<li><p>Eigenvectors corresponding to distinct eigenvalues are <em>orthogonal</em>.</p></li>
+<li><p>A square complex matrix <span class="math inline">\(U\)</span> is said to be <em><strong>unitary</strong></em>, if and only if <span class="math inline">\(U^*U = I\)</span> or <span class="math inline">\(U^* = U^{-1}\)</span> (The corresponding real analogue would be <em>orthogonal</em> matrix.)</p></li>
+<li><p>The columns of a unitary matrix are <em><strong>orthonormal</strong></em>.</p></li>
+<li><p><em><strong>Unitary matrices preserve lengths</strong></em>: For any vextor <span class="math inline">\(x\)</span> and a unitary matrix <span class="math inline">\(U\)</span>: <span class="math display">\[\Vert Ux \Vert  = \Vert x \Vert\]</span></p></li>
+<li><p>Eigenvalues of a unitary matrix have absolute value <span class="math inline">\(1\)</span>, that is if <span class="math inline">\(\lambda\)</span> be an eigenvalue of a unitary martrix, then <span class="math inline">\(\vert \lambda \vert = 1\)</span>.</p></li>
+<li><p>Eigenvectors of a unitary matrix, corresponding to distinct eigenvalues are <em>orthogonal</em>.</p></li>
+<li><p><strong><em>Schur’s theorem:</em></strong> Any <span class="math inline">\(n \times n\)</span> matrix <span class="math inline">\(A\)</span> is similar to an upper triangular matrix, i.e. <span class="math inline">\(\exists\)</span> an <em>upper triangular</em> matrix <span class="math inline">\(T\)</span> and a unitary matrix <span class="math inline">\(U\)</span> so that <span class="math inline">\(A = UTU^*\)</span>.</p></li>
+<li><p><strong>Spectral theorem:</strong> A Hermitian matrix is <em><strong>unitarily diagoinalizable</strong></em>. If <span class="math inline">\(A\)</span> is Hermitian, <span class="math inline">\(\exists\)</span> a unitray matrix <span class="math inline">\(U\)</span> such that <span class="math inline">\(A=U\Lambda U^*\)</span> for a diagonal matrix <span class="math inline">\(\Lambda\)</span>. The matrix <span class="math inline">\(U\)</span> contains, as its columns, the normalized eigenvectors of <span class="math inline">\(U\)</span>, and <span class="math inline">\(\Lambda\)</span> contains, along the main diagonal, the corresponding eigenvalues.</p></li>
+</ol>
+</div>
+<footer class="mt-auto" style="font-size: 0.9rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

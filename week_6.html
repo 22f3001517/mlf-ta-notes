@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 6</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-6">Week 6</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#singular-value-decomposition">Singular Value Decomposition</a></li>
+      <li><a href="#positive-definite-matrices">Positive Definite Matrices</a></li>
+      
+    </ul>
+  </div>
+<h2  id="singular-value-decomposition">Singular Value Decomposition</h2>
+<ol>
+<li><p>For any real <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(A\)</span>, the matrices <span class="math inline">\(A^TA\)</span> and <span class="math inline">\(AA^T\)</span> have the <strong><em>same non-zero</em></strong> eigenvalues.</p></li>
+<li><p>The eigenvalues of <span class="math inline">\(A^TA\)</span> (or those of <span class="math inline">\(AA^T\)</span>) are <em><strong>non-negative</strong></em>. In particular, the non-zero eigenvalues must be <strong><em>strictly positive</em></strong>.</p></li>
+<li><p>Let these positive eigenvalues be <span class="math inline">\(\lambda_1\)</span>, <span class="math inline">\(\lambda_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(\lambda_r\)</span> (where <span class="math inline">\(r\)</span> is the rank of matrix <span class="math inline">\(A\)</span>). Then, the <strong><em>singular values</em></strong> of the matrix <span class="math inline">\(A\)</span> are the numbers <span class="math display">\[\begin{matrix}
+    \sigma_1 &amp; = &amp; \sqrt{\lambda_1} \\
+     \sigma_2 &amp; = &amp;  \sqrt{\lambda_2} \\
+     &amp; \vdots &amp; \\
+    \sigma_r &amp; = &amp; \sqrt{\lambda_r}
+    \end{matrix}\]</span></p></li>
+<li><p>Work out the eigenvectors of <span class="math inline">\(A^TA\)</span> associated with the eigenvalues <span class="math inline">\(\lambda_1\)</span>, <span class="math inline">\(\lambda_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(\lambda_r\)</span>. Let them be <span class="math inline">\(v_1\)</span>, <span class="math inline">\(v_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(v_r\)</span>. These are referred to as the <strong><em>right singular vectors</em></strong> of the matrix <span class="math inline">\(A\)</span>. Now extend this set, using Gram-Schimdt to an orthonormal set <span class="math display">\[\{ v_1, v_2, \ldots, v_r, v_{r+1}, \ldots, v_n\}\]</span> Construct the matrix <span class="math inline">\(V\)</span> with these vectors as columns: <span class="math display">\[V = \begin{bmatrix} \mid   &amp; \mid &amp; &amp; \mid \\
+           v_1 &amp; v_2 &amp; \ldots &amp; v_n \\
+         \mid   &amp; \mid &amp; &amp; \mid 
+       \end{bmatrix}\]</span></p></li>
+<li><p>Work out the eigenvectors of <span class="math inline">\(AA^T\)</span> associated with the eigenvalues <span class="math inline">\(\lambda_1\)</span>, <span class="math inline">\(\lambda_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(\lambda_r\)</span>. Let them be <span class="math inline">\(u_1\)</span>, <span class="math inline">\(u_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(u_r\)</span>. These are referred to as the <strong><em>left singular vectors</em></strong> of the matrix <span class="math inline">\(A\)</span>. Now extend this set, using Gram-Schimdt to an orthonormal set <span class="math display">\[\{ u_1, u_2, \ldots, u_r, u_{r+1}, \ldots, u_m\}\]</span> Construct the matrix <span class="math inline">\(U\)</span> with these vectors as columns: <span class="math display">\[U = \begin{bmatrix} \mid   &amp; \mid &amp; &amp; \mid \\
+           u_1 &amp; u_2 &amp; \ldots &amp; u_m \\
+         \mid   &amp; \mid &amp; &amp; \mid 
+       \end{bmatrix}\]</span></p></li>
+<li><p>The SVD of <span class="math inline">\(A\)</span> is then <span class="math display">\[A = U \Sigma \ V^T\]</span> where <span class="math inline">\({\displaystyle \Sigma}\)</span> is an <span class="math inline">\(m \times n\)</span> matrix having the structure: <span class="math display">\[\Sigma = \begin{bmatrix}
+\sigma_1 &amp;  &amp; &amp; &amp; \\
+&amp; \sigma_2 &amp; &amp; &amp; \\
+&amp; &amp; \ddots &amp;&amp; \\
+&amp; &amp; &amp; \sigma_r &amp; \\
+&amp; &amp; &amp; &amp; 0  
+\end{bmatrix}_{m\times n}\]</span></p></li>
+<li><p>In practice, however, we needn’t workout the eigenvectors for both <span class="math inline">\(A^TA\)</span> and <span class="math inline">\(AA^T\)</span>. It is useful to do it only for one them. If <span class="math inline">\(m &lt; n\)</span>, then the size of <span class="math inline">\(AA^T\)</span> is smaller. Work out the left singular vectors <span class="math inline">\(u_i\)</span>’s and then obtain <span class="math inline">\(r\)</span> of the right singular vectors <span class="math inline">\(v_i\)</span>’s using <span class="math display">\[v_i = \dfrac{1}{\sigma_i} A^T u_i\]</span> Then extend the set <span class="math inline">\(\{ v_1, v_2, \ldots, v_r\}\)</span> to have <span class="math inline">\(n\)</span> orthonormal vectors using Gram Schimdt orthogonalization.</p></li>
+<li><p>If <span class="math inline">\(n &lt; m\)</span>, then the size of <span class="math inline">\(A^TA\)</span> is smaller. Work out the right singular vectors <span class="math inline">\(v_i\)</span>’s and then obtain <span class="math inline">\(r\)</span> of the left singular vectors <span class="math inline">\(u_i\)</span>’s using <span class="math display">\[u_i = \dfrac{1}{\sigma_i} A u_i\]</span> Then extend the set <span class="math inline">\(\{ u_1, u_2, \ldots, u_r\}\)</span> to have <span class="math inline">\(m\)</span> orthonormal vectors using Gram Schimdt orthogonalization.</p></li>
+<li><p>It is instructive to note that the columns of <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> give the orthonormal bases for all four fundamental subspaces of an <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(A\)</span>:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">first</th>
+<td style="text-align: center;"><span class="math inline">\(r\)</span></th>
+<td style="text-align: center;">columns of <span class="math inline">\(U\)</span> :</th>
+<td style="text-align: left;"><strong>column space</strong> of <span class="math inline">\(A\)</span></th>
+</tr>
+
+<tr class="even">
+<td style="text-align: center;">last</td>
+<td style="text-align: center;"><span class="math inline">\(m-r\)</span></td>
+<td style="text-align: center;">columns of <span class="math inline">\(U\)</span> :</td>
+<td style="text-align: left;"><strong>left nullspace</strong> of <span class="math inline">\(A\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">first</td>
+<td style="text-align: center;"><span class="math inline">\(r\)</span></td>
+<td style="text-align: center;">columns of <span class="math inline">\(V\)</span> :</td>
+<td style="text-align: left;"><strong>row space</strong> of <span class="math inline">\(A\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">last</td>
+<td style="text-align: center;"><span class="math inline">\(n-r\)</span></td>
+<td style="text-align: center;">columns of <span class="math inline">\(V\)</span> :</td>
+<td style="text-align: left;"><strong>nullspace</strong> of <span class="math inline">\(A\)</span></td>
+</tr>
+</tbody>
+</table></li>
+<li><p>We can write <span class="math inline">\(A\)</span> as the sum of rank 1 matrices in the following way: <span class="math display">\[A = \sigma_1 u_1v_1^T + \sigma_2 u_2v_2^T + \ldots + \sigma_r u_rv_r^T\]</span></p></li>
+<li><p>Restricting the above sum to <span class="math inline">\(k\)</span> terms (<span class="math inline">\(k \le r\)</span>) gives the rank-<span class="math inline">\(k\)</span> approximation of the matrix <span class="math inline">\(A\)</span>: <span class="math display">\[A_k = \sigma_1 u_1v_1^T + \sigma_2 u_2v_2^T + \ldots + \sigma_k u_kv_k^T, \quad (k \le r)\]</span> Specifically, the rank-1 approximation of matrix <span class="math inline">\(A\)</span> is <span class="math display">\[A_1 = \sigma_1 u_1 v_1^T\]</span></p></li>
+<li><p><strong>A geometrical aspect of SVD:</strong> Treat the rows of an <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(A\)</span> as <span class="math inline">\(m\)</span> points in <span class="math inline">\(n\)</span>-dimensional space. Then for any column vector <span class="math inline">\(v\)</span> such that <span class="math inline">\(\Vert v\Vert=1\)</span>, the quantity <span class="math inline">\(\Vert Av\Vert^2\)</span> can be interpreted as the <strong><em>sum of the squared lengths of the projections of the rows of <span class="math inline">\(A\)</span> along <span class="math inline">\(v\)</span></em></strong>. And hence, the <em><strong>best fit line through the origin</strong></em> is the one <strong><em>maximizing</em></strong> <span class="math inline">\(\Vert Av\Vert^2\)</span>.</p>
+<ul>
+<li><p>The <em><strong>first singular vector</strong></em>, <span class="math inline">\(v_1\)</span>, of <span class="math inline">\(A\)</span>, is the direction of the best fit line through the origin for the <span class="math inline">\(m\)</span> points in the <span class="math inline">\(n\)</span>-dimensional space that are the rows of the matrix <span class="math inline">\(A\)</span>. Thus, <span class="math display">\[v_1 = \mathop{\mathrm{arg\,max}}_{\Vert v\Vert = 1} \Vert Av\Vert\]</span></p></li>
+<li><p>The value <span class="math inline">\(\sigma_1 = \Vert Av_1\Vert\)</span> is the <strong><em>first singular value</em></strong> of <span class="math inline">\(A\)</span>. Notice that <span class="math inline">\(\sigma_1^2\)</span> is the sum of the projections of the points on the line determined by <span class="math inline">\(v_1\)</span>.</p></li>
+<li><p>Similarly, the second singular vector <span class="math display">\[v_2 = \mathop{\mathrm{arg\,max}}_{v\perp v_1, \Vert v\Vert = 1} \Vert Av\Vert\]</span> and so on.</p></li>
+</ul></li>
+<li><p>If the SVD of <span class="math inline">\(A=U\Sigma V^T\)</span>, then the <em><strong>pseudoinverse</strong></em> of <span class="math inline">\(A\)</span> is <span class="math display">\[A^\dagger = V\Sigma^\dagger U^T\]</span> where <span class="math display">\[\Sigma^\dagger  = \begin{bmatrix}
+1/\sigma_1 &amp;  &amp; &amp; &amp; \\
+&amp; 1/\sigma_2 &amp; &amp; &amp; \\
+&amp; &amp; \ddots &amp;&amp; \\
+&amp; &amp; &amp; 1/\sigma_r &amp; \\
+&amp; &amp; &amp; &amp; 0  
+\end{bmatrix}_{n\times m}\]</span></p></li>
+</ol>
+<br/>
+<h2  id="positive-definite-matrices">Positive Definite Matrices</h2>
+<ol>
+<li><p>For any <span class="math inline">\(n\times n\)</span> real, symmetric matrix <span class="math inline">\(A\)</span>, the product <span class="math inline">\(x^TAx\)</span>, where <span class="math inline">\(x\in \mathbb{R}^n\)</span>, is a <strong><em>pure quadratic form</em></strong>.</p></li>
+<li><p>The real and symmetric matrix <span class="math inline">\(A\)</span> is said to be <strong><em>positive definite</em></strong> if for every <em>nonzero</em> vector <span class="math inline">\(x\in \mathbb{R}^n\)</span>, <span class="math inline">\(x^TAx &gt; 0\)</span>.</p></li>
+<li><p>Each of the following tests is a <em>necessary and sufficient condition</em> for the real symmetric matrix <span class="math inline">\(A\)</span> to be <strong><em>positive definite</em></strong>:</p>
+<ul>
+<li><p><span class="math inline">\(x^TAx&gt;0\)</span> for all non-zero vectors <span class="math inline">\(x\)</span>.</p></li>
+<li><p>All the eigenvalues of <span class="math inline">\(A\)</span> are positive: <span class="math inline">\(\lambda_i &gt; 0\)</span>.</p></li>
+<li><p>All the upper left submatrices <span class="math inline">\(A_k\)</span> have positive determinants: <span class="math inline">\(\det(A_k) &gt; 0\)</span>.</p></li>
+<li><p>In the echelon form (without row exchanges) of the matrix <span class="math inline">\(A\)</span>, all the pivots entries are positive.</p></li>
+</ul></li>
+<li><p>Each of the following tests is a <em>necessary and sufficient condition</em> for the real symmetric matrix <span class="math inline">\(A\)</span> to be <strong><em>positive semidefinite</em></strong>:</p>
+<ul>
+<li><p><span class="math inline">\(x^TAx\ge 0\)</span> for all vectors <span class="math inline">\(x\)</span>.</p></li>
+<li><p>All the eigenvalues of <span class="math inline">\(A\)</span> are nonnegative: <span class="math inline">\(\lambda_i \ge 0\)</span>.</p></li>
+<li><p>All the upper left submatrices <span class="math inline">\(A_k\)</span> have nonnegative determinants: <span class="math inline">\(\det(A_k) \ge 0\)</span>.</p></li>
+<li><p>In the echelon form (without row exchanges) of the matrix <span class="math inline">\(A\)</span>, all the pivots entries are nonnegative.</p></li>
+</ul></li>
+<li><p>For checking for negative definiteness (or negative semidefniteness) of real symmetric matrix <span class="math inline">\(A\)</span>, we can check for <em>positive</em> definiteness (or <em>positive</em> semidefiniteness) of <span class="math inline">\(-A\)</span>.</p></li>
+<li><p>In case, the real symmetric matrix <span class="math inline">\(A\)</span> is neither positive nor negative definite (or semidefinite), then it is an <em><strong>indefinite</strong></em> matrix.</p></li>
+<li><p>If <span class="math inline">\(A\)</span> is a positive definite matrix, then so are <span class="math inline">\(A^2\)</span>, <span class="math inline">\(A^3\)</span>, <span class="math inline">\(A^4\)</span>, …, and <span class="math inline">\(A^{-1}\)</span>.</p></li>
+<li><p>If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are positive definite, then so is <span class="math inline">\(A+B\)</span>.</p></li>
+</ol>
+</div>
+<footer class="mt-auto" style="font-size: 0.9rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 3</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-3">Week 3</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#the-four-fundamental-subspaces">The Four Fundamental Subspaces</a></li>
+      <li><a href="#projections">Projections</a></li>
+      <li><a href="#mathbfaxb-least-square-solution">\( \mathbf{Ax = b} \): Least Square Solution</a></li>
+    </ul>
+  </div>
+<h2  id="the-four-fundamental-subspaces">The Four Fundamental Subspaces</h2>
+<ol>
+<li><p>Any <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(A\)</span> can be viewed as representing, in some bases, a <em>linear transformation</em> that maps vectors in <span class="math inline">\(\mathbb{R}^n\)</span> to vectors in <span class="math inline">\(\mathbb{R}^m\)</span>.</p></li>
+<li><p>The four fundamental subspaces of the matrix <span class="math inline">\(A\)</span>, with rank <span class="math inline">\(r\)</span>, are:</p>
+<ul>
+<li><p>The <strong><em>column space</em></strong>, denoted as <span class="math inline">\(C(A)\)</span>, is the space spanned by the columns of the matrix <span class="math inline">\(A\)</span> taken as vectors: <span class="math display">\[C(A) = \{ Av \mid v\in \mathbb{R}^n \}\]</span> Its dimension is <span class="math inline">\(r\)</span>.</p></li>
+<li><p>The <strong><em>nullspace</em></strong>, denoted as <span class="math inline">\(N(A)\)</span>, is the set of vectors that are mapped to the zero vector by the matrix: <span class="math display">\[N(A) = \{ v\in \mathbb{R}^n \mid Av = 0 \}\]</span> It’s dimension is <span class="math inline">\(n-r\)</span>.</p></li>
+<li><p>The <strong><em>row space</em></strong>, denoted as <span class="math inline">\(C(A^T)\)</span> is the space spanned by the rows of <span class="math inline">\(A\)</span>. It is the same as the column space of <span class="math inline">\(A^T\)</span>. It’s dimension is also <span class="math inline">\(r\)</span>.</p></li>
+<li><p>The <strong><em>left nullspace</em></strong>. denoted as <span class="math inline">\(N(A^T)\)</span>, is the nullspace of <span class="math inline">\(A^T\)</span>. It’s dimension is <span class="math inline">\(m-r\)</span>.</p></li>
+</ul></li>
+<li><p>Two vector spaces <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are said to be <em>orthogonal</em> and denoted <span class="math inline">\(U \perp V\)</span>, if for every pair of vectors <span class="math inline">\(u\in U\)</span> and <span class="math inline">\(v\in V\)</span>, <span class="math inline">\(u^Tv = 0\)</span>.</p></li>
+<li><p>The row space and the nullspace are subspaces of the domain set <span class="math inline">\(\mathbb{R}^n\)</span> of <span class="math inline">\(A\)</span> and are <em>orthogonal</em>: <span class="math inline">\(N(A) \perp C(A^T)\)</span>.</p></li>
+<li><p>The column space and the left nullspace are the subspaces of the co-domain set <span class="math inline">\(\mathbb{R}^m\)</span> of the matrix <span class="math inline">\(A\)</span> and are orthogonal: <span class="math inline">\(C(A)\perp N(A^T)\)</span>.</p></li>
+<li><p>Row reduce <span class="math inline">\(A\)</span> to an <em>echelon form</em> <span class="math inline">\(U\)</span>. Then:</p>
+<ul>
+<li><p>The <em>non-zero</em> rows of <span class="math inline">\(U\)</span> are a basis for the <em>row space</em> of <span class="math inline">\(A\)</span>.</p></li>
+<li><p>The <em>columns of <span class="math inline">\(A\)</span></em> that correspond to the <em>pivot columns of <span class="math inline">\(U\)</span></em> form a basis for the <em>column space</em> of <span class="math inline">\(A\)</span>.</p></li>
+<li><p>The variables corresponding to the non-pivot columns are the free variables. The basis for the nullspace of <span class="math inline">\(A\)</span> is obtained by vectors which are obtained by, in turn, assigning each free variable the value 1 and the other free variables the value 0.</p></li>
+</ul></li>
+</ol>
+<h2  id="projections">Projections</h2>
+<ol>
+<li><p>The <em>projection</em> of vector <span class="math inline">\(b\)</span> along the vector <span class="math inline">\(a\)</span> is given by <span class="math inline">\(\left(\dfrac{a^Tb}{a^Ta}\right) a\)</span>.</p></li>
+<li><p>The <em>projection matrix</em> <span class="math inline">\(\mathbb{P}\)</span> associated with vector <span class="math inline">\(a\)</span> is given by <span class="math display">\[\mathbb{P} = \dfrac{aa^T}{a^Ta}\]</span></p></li>
+<li><p>The projection of <span class="math inline">\(b\)</span> along <span class="math inline">\(a\)</span> can then be found as <span class="math inline">\(\mathbb{P} b\)</span>.</p></li>
+<li><p>The projection matrix associated with a matrix <span class="math inline">\(A\)</span> is <span class="math display">\[\mathbb{P} = A(A^TA)^{-1}A^T\]</span></p></li>
+<li><p>In case, <span class="math inline">\(A^TA\)</span> is not invertible, we need to replace <span class="math inline">\((A^TA)^{-1}\)</span> with the <strong><em>pseudo inverse</em></strong> <span class="math inline">\((A^TA)^\dagger \)</span>.</p></li>
+<li><p>For a matrix <span class="math inline">\(A\)</span>, its projection matrix <span class="math inline">\(\mathbb{P}\)</span> projects any vector <span class="math inline">\(b\)</span> into the <em>column space of</em> <span class="math inline">\(A\)</span>, i.e. <span class="math inline">\(\mathbb{P}b \in C(A)\)</span> and can be thought of as the best approximation of <span class="math inline">\(b\)</span> in the column space of <span class="math inline">\(A\)</span>.</p></li>
+<li><p>The projection matrix <span class="math inline">\(\mathbb{P}\)</span></p>
+<ul>
+<li><p>is <em><strong>symmetric</strong></em>, that is, <span class="math inline">\(\mathbb{P}^T = \mathbb{P}\)</span>,</p></li>
+<li><p>is <em><strong>idempotent</strong></em>, that is, <span class="math inline">\(\mathbb{P}^2 = \mathbb{P}\)</span>.</p></li>
+</ul>
+<p>Conversely, any matrix satisfying the above two properties can be taken to be a projection matrix.</p></li>
+<li><p>For any projection matrix <span class="math inline">\(\mathbb{P}\)</span>, the matrix <span class="math inline">\((I-\mathbb{P})\)</span> is an <em>orthogonal projection</em> matrix. If <span class="math inline">\(\mathbb{P}\)</span> projects a vector <span class="math inline">\(b\)</span> onto the <span class="math inline">\(C(A)\)</span>, then <span class="math inline">\((I-\mathbb{P})\)</span> projects onto the subspace orthogonal to column space of <span class="math inline">\(A\)</span>, that is, the left nullspace <span class="math inline">\(N(A^T)\)</span>.</p></li>
+</ol>
+<h2  id="mathbfaxb-least-square-solution"><span class="math inline">\(\mathbf{Ax=b}\)</span>: Least Square Solution</h2>
+<ol>
+<li><p>The matrix equation <span class="math inline">\(Ax=b\)</span> is solvable if and only if <span class="math inline">\(b \in C(A)\)</span>.</p></li>
+<li><p>In case <span class="math inline">\(b\notin C(A)\)</span>, we can still find an approximate solution <span class="math inline">\(\hat{x}\)</span> that minimizes the squared norm <span class="math inline">\(\Vert Ax-b\Vert^2\)</span>.</p></li>
+<li><p>This <em>least square solution</em> can be obtained by solving the <em><strong>normal equations</strong></em>: <span class="math display">\[A^TA\hat{x} = A^Tb\]</span> and is given by <span class="math display">\[\hat{x} = (A^TA)^{-1}A^T b\]</span></p></li>
+<li><p>Finding the least square solution is equivalent to solving the equation <span class="math display">\[A\hat{x} = \mathbb{P} b\]</span> where <span class="math inline">\(\mathbb{P}\)</span> is the projection matrix of <span class="math inline">\(A\)</span>.</p></li>
+</ol>
+</div>
+<footer class="mt-auto" style="font-size: 0.9rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
