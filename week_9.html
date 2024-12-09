@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 9</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+            <li><a class="dropdown-item" href="week_9.html">Week 9</a></li>
+            <li><a class="dropdown-item" href="week_10.html">Week 10</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-9">Week 9</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#constrained-optimization-one-inequality">Constrained Optimization: One Inequality</a></li>
+      <li><a href="#constrained-optimization-one-equality">Constrained Optimization: One
+Equality</a></li>
+      <li><a href="#convex-sets">Convex Sets</a></li>
+      <li><a href="#convex-functions">Convex Functions</a></li>
+      <li><a href="#properties-of-convex-functions">Properties of Convex Functions</a></li>
+      
+    </ul>
+  </div>
+  
+<h2  id="constrained-optimization-one-inequality">Constrained Optimization: One Inequality</h2>
+
+<ol>
+<li><p>The problem is to find <span
+class="math display">\[\begin{array}{lrl} &amp; {\displaystyle \min_{x}}
+&amp; f(x) \\
+        \text{subject to} &amp;&amp;  g(x) \le 0  
+   \end{array}\]</span> Note that <span class="math inline">\(x\in
+\mathbb{R}^d\)</span>.</p></li>
+<li><p>A direction characterized by a (unit) vector <span
+class="math inline">\(d\)</span> is said to be a <em><strong>descent
+direction</strong></em> at a point <span
+class="math inline">\(x\)</span> if <span class="math display">\[d^T
+\nabla f(x) &lt; 0\]</span></p></li>
+<li><p>The value of the objective function will necessarily
+<em><strong>decrease</strong></em> if one moves along a descent
+direction. As such, a descent direction is a property of the objective
+function <span class="math inline">\(f(x)\)</span>.</p></li>
+<li><p>At a point <span class="math inline">\(x\)</span> in the
+constraint region <span class="math inline">\(g(x)\le 0\)</span>, a
+direction characterized by a unit vector <span
+class="math inline">\(d\)</span> is said to be a <strong><em>feasible
+direction</em></strong> if there exists a <span
+class="math inline">\(\eta_0&gt;0\)</span> such that for all <span
+class="math inline">\(\eta \in (0, \eta_0]\)</span>, the point <span
+class="math inline">\(x+\eta d\)</span> is still in the constraint
+region, i.e. <span class="math inline">\(g(x+\eta d) \le 0\)</span>. In
+simple terms, a feasible direction at a point is a direction along which
+we can move by some step size so that we still remain in the constraint
+region.</p></li>
+<li><p>The feasible direction is a property of the constraint function
+<span class="math inline">\(g(x)\)</span>.</p></li>
+<li><p><strong>Necessary conditions:</strong> If <span
+class="math inline">\(x^*\)</span> is an <em>optimal</em> point that
+minimizes the objective function <span class="math inline">\(f\)</span>,
+then at the point <span class="math inline">\(x^*\)</span>:</p>
+<ul>
+<li><p><strong><em>no descent direction should be a feasible
+direction</em></strong>,</p></li>
+<li><p><span class="math inline">\(\nabla f(x^*) = -\lambda \nabla
+g(x^*)\)</span> for some <span class="math inline">\(\lambda \ge
+0\)</span>, and</p></li>
+<li><p><span class="math inline">\(\lambda g(x^*)=0\)</span> for the
+same <span class="math inline">\(\lambda\)</span> as above.</p></li>
+</ul></li>
+</ol>
+
+<h2 id="constrained-optimization-one-equality">Constrained Optimization: One
+Equality</h2>
+<ol>
+<li><p>The problem is to find <span
+class="math display">\[\begin{array}{lrl} &amp; {\displaystyle \min_{x}}
+&amp; f(x) \\
+        \text{subject to} &amp;&amp;  g(x) = 0  
+   \end{array}\]</span> Note that <span class="math inline">\(x\in
+\mathbb{R}^d\)</span>.</p></li>
+<li><p><strong>Necessary conditions:</strong> If <span
+class="math inline">\(x^*\)</span> is an <em>optimal</em> point that
+minimizes the objective function <span class="math inline">\(f\)</span>,
+then at the point <span class="math inline">\(x^*\)</span>:</p>
+<ul>
+<li><p><span class="math inline">\(g(x^*)=0\)</span></p></li>
+<li><p><span class="math inline">\(d^T\nabla g(x^*)=0\)</span> for any
+feasible direction <span class="math inline">\(d\)</span>,</p></li>
+<li><p><span class="math inline">\(\nabla f(x^*) = -\lambda \nabla
+g(x^*)\)</span> for some arbitrary <span class="math inline">\(\lambda
+\in \mathbb{R}\)</span>.</p></li>
+</ul>
+<p>Notice that in this case <span class="math inline">\(\lambda\)</span>
+is allowed to take either positive or negative values. <span
+class="math inline">\(\lambda\)</span> is referred to as the
+<em><strong>Lagrange multiplier</strong></em> and equation (iii) above
+is the <em>Lagrange equation</em>.</p></li>
+<li><p>In general, it may <em><strong>not</strong></em> be feasible to
+solve the system of equations that satisfy the Lagrange
+equations.</p></li>
+<li><p>In case the constraint region <span class="math inline">\(\Omega
+= \{ x \mid g(x)\le 0\}\)</span> is <em><strong>convex</strong></em>,
+the <em><strong>projected gradient descent</strong></em> algorithm can
+be applied and the optimum <span class="math inline">\(x^*\)</span> can
+be found as the limit of sequence <span class="math inline">\(\{x_0,
+x_1, x_2, \ldots \}\)</span>, where <span class="math display">\[x_k =
+\prod  (x_{k-1} - \eta_k \nabla f(x_{k-1})) , \quad k = 1, 2,
+\ldots\]</span></p></li>
+<li><p>The projection operator <span
+class="math inline">\(\prod\)</span> projects any vector onto <span
+class="math inline">\(\Omega\)</span>: <span
+class="math display">\[\prod (v) = \min_{x\in \Omega} \Vert v-x
+\Vert^2\]</span></p></li>
+</ol>
+<h2  id="convex-sets">Convex Sets</h2>
+<ol>
+<li><p>A set <span class="math inline">\(S\subset \mathbb{R}^d\)</span>
+is a <em>convex set</em> if <em>for every</em> pair of points <span
+class="math inline">\(x_1\)</span> and <span
+class="math inline">\(x_2\)</span> which are in <span
+class="math inline">\(S\)</span>, the line segment joining these points
+is also entirely in <span class="math inline">\(S\)</span>, i.e. <span
+class="math display">\[\forall \ x_1, x_2 \in S \Rightarrow \lambda x_1
++ (1-\lambda) x_2 \in S, \ \lambda \in [0, 1]\]</span></p></li>
+<li><p>Examples of convex sets include:</p>
+<ul>
+<li><p>the empty set</p></li>
+<li><p>a set consisting of a single point</p></li>
+<li><p>a line or a line segment</p></li>
+<li><p>a subspace</p></li>
+<li><p>a hyperplane</p></li>
+<li><p>a linear variety (a translation of a subspace)</p></li>
+<li><p>a half-space</p></li>
+<li><p><span class="math inline">\(\mathbb{R}^d\)</span></p></li>
+</ul></li>
+<li><p>Convex sets in <span class="math inline">\(\mathbb{R}^d\)</span>
+have the following properties:</p>
+<ol>
+<li><p>If <span class="math inline">\(S\)</span> is a convex set and
+<span class="math inline">\(\beta\)</span> is any real number, then the
+set <span class="math display">\[\beta S = \{x \mid x = \beta v, \ v\in
+S\}\]</span> is also convex.</p></li>
+<li><p>If <span class="math inline">\(S_1\)</span> and <span
+class="math inline">\(S_2\)</span> are convex sets, then the set <span
+class="math display">\[S_1+S_2 = \{ x \mid x =v_1 + v_2 , \ v_1\in S_1,
+v_2 \in S_2\}\]</span> is also convex.</p></li>
+<li><p>The intersection of any collection of convex sets is also
+convex.</p></li>
+</ol></li>
+<li><p><strong>Convex Combination:</strong> Let <span
+class="math inline">\(S=\{x_1,\, x_2,\, \ldots,\, x_n\} \subset
+\mathbb{R}^d\)</span>. Then a <em>convex combination</em> of the
+elements of <span class="math inline">\(S\)</span> is a linear
+combination of the elements of <span class="math inline">\(S\)</span> so
+that the multiplying coefficients are all <em>non-negative</em> and sum
+up to 1. That is to say, any <span
+class="math inline">\(z\in\mathbb{R}^d\)</span> is a convex combination
+of the elements of <span class="math inline">\(S\)</span> if <span
+class="math inline">\(\exists\)</span> <span
+class="math inline">\(\lambda_1\)</span>, <span
+class="math inline">\(\lambda_2\)</span>, …, <span
+class="math inline">\(\lambda_n\)</span> so that <span
+class="math display">\[\begin{matrix}
+  \lambda_i \ge 0, \quad i=1, 2, \ldots, n \\[2ex]
+  {\displaystyle\sum_{i=1}^n \lambda_i = 1}, \text{ and }\\[3ex]
+  z = \lambda_1 x_1 + \lambda_2 x_2 + \ldots + \lambda_n x_n
+\end{matrix}\]</span></p></li>
+<li><p><strong>Convex Hull:</strong> Let <span
+class="math inline">\(S=\{x_1,\, x_2,\, \ldots,\, x_n\} \subset
+\mathbb{R}^d\)</span>. The <em>convex hull</em> of the set <span
+class="math inline">\(S\)</span>, denoted <span
+class="math inline">\(\textrm{CH}(S)\)</span> is the set of all possible
+convex combinations of the elements of <span
+class="math inline">\(S\)</span>: <span class="math display">\[CH(S)=\{
+z \mid z = \sum_{i=1}^n \lambda_i x_i, \,\text{ for } \lambda_1,
+\lambda_2 \ldots, \lambda_n \ge 0, \, \sum_{i=1}^n \lambda_i = 1
+\}\]</span></p></li>
+<li><p>The convex hull of the set <span class="math inline">\(S\)</span>
+can also be defined as the intersection of all convex sets that contain
+the set <span class="math inline">\(S\)</span>.</p></li>
+</ol>
+<h2  id="convex-functions">Convex Functions</h2>
+<ol>
+<li><p><strong>Epigraph of a function:</strong> Let <span
+class="math inline">\(X\subset \mathbb{R}^d\)</span> and <span
+class="math inline">\(Y\subset \mathbb{R}\)</span> and consider a
+function <span class="math inline">\(f:X\to Y\)</span>. It’s
+<em><strong>epigraph</strong></em> is then the set <span
+class="math display">\[\mathrm{epi}(f) = \left\{
+\begin{bmatrix}
+    x \\ z
+\end{bmatrix} \subset X \times Y \mid  z \ge f(x)
+\right\}\]</span> That is, the epigraph of <span
+class="math inline">\(f\)</span> consists of all points “on or above”
+the graph of <span class="math inline">\(f\)</span>.</p></li>
+<li><p>A function <span class="math inline">\(f:\mathbb{R}^d \to
+\mathbb{R}\)</span> is said to be a <strong><em>convex
+function</em></strong> if <em>any</em> of the following holds:</p>
+<ol type="I">
+<li><p>the <span class="math inline">\(\mathrm{epi}(f)\subset
+\mathbb{R}^{d+1}\)</span> is a convex set.</p></li>
+<li><p><span class="math inline">\(\forall\, x_1, x_2 \in
+\mathbb{R}^d\)</span> and <span class="math inline">\(\forall \,\lambda
+\in [0, 1]\)</span> <span class="math display">\[f\left(\lambda x_1 +
+(1-\lambda)x_2\right) \le \lambda f(x_1) + (1-\lambda)
+f(x_2)\]</span></p></li>
+<li><p>for any point <span class="math inline">\(y\)</span> in a
+neighbourhood of <span class="math inline">\(x\)</span>, <span
+class="math display">\[f(y) \ge f(x) + (y-x)^T \nabla f(x)\]</span>
+assuming <span class="math inline">\(f\)</span> to be
+differentiable.</p></li>
+<li><p>the <em><strong>Hessian</strong></em> of <span
+class="math inline">\(f\)</span> is a <em><strong>positive
+semi-definite</strong></em> matrix.</p></li>
+</ol></li>
+</ol>
+<h2  id="properties-of-convex-functions">Properties of
+Convex Functions</h2>
+<ol>
+<li><p>If <span class="math inline">\(f\)</span> is a convex function,
+then all <em>local minima</em> of <span class="math inline">\(f\)</span>
+are also <em>global minima</em>.</p></li>
+<li><p>The set of all global minima of a convex function is a convex
+set.</p></li>
+<li><p>If <span class="math inline">\(f:\mathbb{R}^d \to
+\mathbb{R}\)</span> be a differentiable, convex function, then for a
+point <span class="math inline">\(x^*\in \mathbb{R}^d\)</span> to be a
+<em>global minimum</em> of <span class="math inline">\(f\)</span>, the
+<em><strong>necessary and sufficient</strong></em> is <span
+class="math inline">\(\nabla f(x^*)=0\)</span>.</p></li>
+<li><p>If <span class="math inline">\(f, g : \mathbb{R}^d \to
+\mathbb{R}\)</span> be convex functions, then their
+<em><strong>sum</strong></em> <span
+class="math inline">\(f(x)+g(x)\)</span> is also a convex
+function.</p></li>
+<li><p>If <span class="math inline">\(f:\mathbb{R} \to
+\mathbb{R}\)</span> be a <strong><em>convex</em></strong> and
+<strong><em>non-decreasing</em></strong> function, and <span
+class="math inline">\(g:\mathbb{R}^d \to \mathbb{R}\)</span> be a
+<strong><em>convex</em></strong> function, then their
+<strong><em>composition</em></strong> <span
+class="math inline">\(f(g(x))\)</span> is a convex function.</p></li>
+<li><p>If <span class="math inline">\(f:\mathbb{R} \to
+\mathbb{R}\)</span> be a <strong><em>convex</em></strong> and
+<strong><em>non-increasing</em></strong> function, and <span
+class="math inline">\(g:\mathbb{R}^d \to \mathbb{R}\)</span> be a
+<strong><em>concave</em></strong> function, then their
+<strong><em>composition</em></strong> <span
+class="math inline">\(f(g(x))\)</span> is a convex function.</p></li>
+<li><p>The composition of two convex functions <em><strong>need
+not</strong></em> be convex.</p></li>
+<li><p>A function <span class="math inline">\(f\)</span> is concave if
+and only if <span class="math inline">\(-f\)</span> is convex.</p></li>
+</ol>
+
+</div>
+<footer class="mt-auto" style="font-size: 0.8rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

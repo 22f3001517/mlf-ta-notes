@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 10</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+            <li><a class="dropdown-item" href="week_9.html">Week 9</a></li>
+            <li><a class="dropdown-item" href="week_10.html">Week 10</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-10">Week 10</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#optimization-an-application-in-ml">Optimization: An Application in
+ML</a></li>
+      <li><a href="#revisiting-optimization">Revisiting Optimization</a></li>
+      <li><a href="#karush-kuhn-tucker-kkt-conditions">Karush-Kuhn-Tucker (KKT)
+Conditions</a></li>
+            
+    </ul>
+  </div>
+  
+<h2 id="optimization-an-application-in-ml">Optimization: An Application in
+ML</h2>
+<ol>
+<li><p>Given a dataset <span class="math display">\[\mathcal{D} =
+\{(x_1, y_1), (x_2, y_2), (x_3, y_3), \ldots, (x_n, y_n)\}\]</span> of
+data points <span class="math inline">\(x_i \in \mathbb{R}^d\)</span>
+and the corresponding labels <span class="math inline">\(y_i \in
+\mathbb{R}\)</span>, a common Machine Learning problem is to find a
+model function <span class="math inline">\(h:\mathbb{R}^d \to
+\mathbb{R}\)</span> that can predict the label of a test data point as
+<span class="math display">\[\hat{y} =
+h(x_\text{test})\]</span></p></li>
+<li><p>In <em><strong>linear regression</strong></em>, we look for a
+linear function <span class="math display">\[h_w(x) = w^Tx\]</span> for
+some <span class="math inline">\(w\in \mathbb{R}^d\)</span>.</p></li>
+<li><p>The weight <span class="math inline">\(w\)</span> corresponding
+to the “best” model is determined from the given data <span
+class="math inline">\(\mathcal{D}\)</span>.</p></li>
+<li><p>A suitable <em>performance measure</em> is the <em><strong>sum of
+squares error</strong></em>: <span class="math display">\[f(w) =
+\dfrac{1}{2} \sum_{i=1}^n \left( w^Tx_i - y_i\right)^2\]</span></p></li>
+<li><p>The specific goal of linear regression is to select a <span
+class="math inline">\(w\)</span> so that <span
+class="math inline">\(f(w)\)</span> is minimized: <span
+class="math display">\[\mathop{\mathrm{arg\,min}}_{w\in \mathbb{R}^d}
+f(w) = \mathop{\mathrm{arg\,min}}_{w\in \mathbb{R}^d} \ \dfrac{1}{2}
+\sum_{i=1}^n \left( w^Tx_i - y_i\right)^2\]</span></p></li>
+<li><p>The loss function <span class="math inline">\(f(w)\)</span> is a
+convex function since it is the sum of convex functions. Hence, the
+global minimum is obtained by setting <span
+class="math inline">\(\nabla_w f(w)=0\)</span></p></li>
+<li><p>Define the matrices: <span class="math display">\[X =
+\begin{bmatrix} \text{---} &amp; x_1^T &amp; \text{---} \\ \text{---}
+&amp; x_2^T &amp; \text{---} \\ &amp; \vdots &amp;  \\ \text{---} &amp;
+x_n^T &amp; \text{---} \end{bmatrix}, \quad y =
+\begin{bmatrix}
+    y_1 \\ y_2 \\ \vdots \\ y_n
+\end{bmatrix}\]</span> The loss function can then be written in the
+matrix form as <span class="math display">\[f(w) = \dfrac{1}{2} \Vert Xw
+- y \Vert ^2 = \dfrac{1}{2} (Xw - y)^T (Xw-y)\]</span> which can further
+be transformed as <span class="math display">\[f(w) = \dfrac{1}{2} w^T
+(X^TX) w - w^T(X^Ty) + \dfrac{1}{2}y^Ty\]</span></p></li>
+<li><p>The gradient of the loss function equated to zero: <span
+class="math display">\[\nabla f(w) = (X^TX)w - X^Ty =
+0\]</span></p></li>
+<li><p>The optimal weight <span class="math inline">\(w^*\)</span> is
+the solution of the <em><strong>normal</strong></em> equation: <span
+class="math display">\[(X^TX)w^* = X^T y\]</span> which gives <span
+class="math display">\[w^* = (X^TX)^\dagger X^Ty\]</span></p></li>
+<li><p>For <span class="math inline">\(x_i \in \mathbb{R}^d\)</span>,
+the “inverse” computation requires <span
+class="math inline">\(O(d^3)\)</span> number of operations, which may be
+computationally expensive for large <span
+class="math inline">\(d\)</span>.</p></li>
+<li><p>The gradient descent method can be used as it doesn’t involve
+inverse calculation: Starting from an initial guess <span
+class="math inline">\(w_0\)</span>, iteratively compute the weight in
+the <span class="math inline">\(k\)</span>-th iteration, using the step
+size <span class="math inline">\(\eta_k\)</span>, as <span
+class="math display">\[w_{k} = w_{k-1} - \eta_k \nabla
+f(w_{k-1})\]</span> which, upon plugging the gradient, becomes <span
+class="math display">\[w_{k} = w_{k-1} - \eta_k \left((X^TX)w_{k-1}-X^Ty
+\right)\]</span></p></li>
+<li><p>In case, the number of points <span
+class="math inline">\(n\)</span> is also very large, we can use the
+<em><strong>stochastic gradient descent</strong></em> (SGD) in which, at
+each iteration, the exact gradient <span class="math inline">\(\nabla
+f\)</span> is replaced by a cheap, <em>unbiased estimator</em> of the
+gradient.</p></li>
+<li><p>In a particular instantiation of the SGD, called the
+<em>mini-batch</em> SGD, at each iteration, the exact gradient is
+replaced by the <em>average</em> gradient of a <em>uniformly sampled
+subset</em> of the training data.</p></li>
+<li><p>The SGD has a <em>slower convergence rate</em> compared to the
+actual gradient descent.</p></li>
+<li><p>Both the gradient descent and the stochastic gradient descent can
+be also applied efficiently to non-convex optimization problems as
+well.</p></li>
+</ol>
+<h2  id="revisiting-optimization">Revisiting
+Optimization</h2>
+<h4  id="unconstrained-optimization-1"> &#8620; Unconstrained
+Optimization</h3>
+<p>If <span class="math inline">\(f\)</span> is <em>convex</em>, the
+<em><strong>global minimum</strong></em> can be obtained by solving
+<span class="math inline">\(\nabla f(x) = 0\)</span>.</p>
+<h4  id="constrained-optimization"> &#8620; Constrained
+Optimization</h3>
+<ol>
+<li><p>The problem: <span class="math display">\[\begin{array}{lrl}
+&amp; {\displaystyle \min_{x}} &amp; f(x) \\
+        \text{subject to} &amp;&amp;  g(x) \le 0  
+   \end{array}\]</span> where <span class="math inline">\(f, g :
+\mathbb{R}^d \to \mathbb{R}\)</span>.</p></li>
+<li><p>Define the <em><strong>Lagrangian</strong></em>: <span
+class="math display">\[\mathcal{L}(x, \lambda) = f(x) + \lambda
+g(x)\]</span> where <span class="math inline">\(x\in
+\mathbb{R}^d\)</span> and <span class="math inline">\(\lambda \in
+\mathbb{R}\)</span>.</p></li>
+<li><p>Viewed as a function of <span
+class="math inline">\(\lambda\)</span>, this is a <em>linear</em>
+function. Since, <span class="math inline">\(g(x)\le 0\)</span>, the
+gradient of the line is negative, so the graph is a downward slanting
+line.</p>
+</li>
+<li><p>As a result: <span class="math display">\[f(x) =
+{\displaystyle\max_{\lambda \ge 0}} \  \mathcal{L}(x,
+\lambda)\]</span></p></li>
+<li><p>Hence, the original problem is equivalent to finding the
+<em>minimum</em> value of <span
+class="math inline">\(\mathcal{L}(x,\lambda )\)</span> for <span
+class="math inline">\(\lambda \ge 0\)</span>: <span
+class="math display">\[\begin{array}{rcl}
+     \begin{array}{rl} &amp; {\displaystyle \min_{x}}\   f(x) \\[2ex]
+        \text{subject to} &amp;  g(x) \le 0  
+   \end{array} &amp; \equiv &amp; {\displaystyle \min_x} \left(
+{\displaystyle \max_{\lambda \ge 0 }} \   \mathcal{L}(x, \lambda)
+\right)
+\end{array}\]</span></p></li>
+<li><p><span class="math inline">\({\displaystyle \min_x} \left(
+{\displaystyle \max_{\lambda \ge 0 }} \   \mathcal{L}(x, \lambda)
+\right)\)</span> is known as the <strong><em>primal form</em></strong>
+of the optimization problem.</p></li>
+<li><p>This <span class="math inline">\(\min \max\)</span> problem is
+usually hard to solve.</p></li>
+<li><p>The corresponding <em><strong>dual form</strong></em> of the
+optimization problem is the <span class="math inline">\(\max
+\min\)</span> form: <span class="math display">\[{\displaystyle
+\max_{\lambda \ge 0}} \left( {\displaystyle \min_x} \   \mathcal{L}(x,
+\lambda) \right)\]</span></p></li>
+<li><p>Thus <span class="math display">\[\begin{aligned}
+    \boxed{{\displaystyle \min_x} \left( {\displaystyle \max_{\lambda
+\ge 0 }} \   \mathcal{L}(x, \lambda) \right)} &amp; \longleftrightarrow
+&amp; \boxed{{\displaystyle \max_{\lambda \ge 0}} \left( {\displaystyle
+\min_x} \   \mathcal{L}(x, \lambda) \right)} \\[2ex]
+    \mathrm{Primal }\quad  &amp; &amp; \quad  \mathrm{Dual}
+\end{aligned}\]</span></p></li>
+<li><p>The <em><strong>primal optimum</strong></em> <span
+class="math inline">\(x^*\)</span> is the point at which the primal form
+attains the <em>minimum</em> <span
+class="math inline">\(f(x^*)\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(\ell(\lambda) = {\displaystyle
+\min_x} \   \mathcal{L}(x, \lambda)\)</span>. The <em><strong>dual
+optimum</strong></em> <span class="math inline">\(\lambda^*\)</span> is
+the value at which the dual form attains its <em>maximum</em> <span
+class="math inline">\(\ell(\lambda^*)\)</span>.</p></li>
+<li><p>In general, the value at the primal optimum may not be equal to
+the value at the dual optimum.</p></li>
+<li><p>The principle of <strong><em>weak duality</em></strong> says that
+the value at the dual optimum is less than or equal to the value at the
+primal optimum: <span class="math display">\[\ell(\lambda^*) \le
+f(x^*)\]</span></p></li>
+<li><p>In case, the objective function <span
+class="math inline">\(f\)</span> and the inequality constraints are
+<em>convex</em> functions, the value at the dual optimum is equal to the
+value at the primal optimum. This is referred to as <em><strong>strong
+duality</strong></em>.</p></li>
+<li><p>Let the objective function <span class="math inline">\(f\)</span>
+and the inequality constraint function <span
+class="math inline">\(g\)</span> be <em>convex</em> functions. Then
+strong duality holds with some <em>regularizing conditions</em>. Let the
+primal optimum be <span class="math inline">\(x^*\)</span> and the dual
+optimum be <span class="math inline">\(\lambda^*\)</span>. Then the
+following conditions hold true:</p>
+<ol>
+<li><p><strong>Stationarity condition:</strong> <span
+class="math display">\[\nabla f(x^*) + \lambda^* \nabla g(x^*) =
+0\]</span></p></li>
+<li><p><strong>Complimentary slackness condition:</strong> <span
+class="math display">\[\lambda^*\  g(x^*) = 0\]</span></p></li>
+<li><p><strong>Primal feasibility condition:</strong> <span
+class="math display">\[g(x^*) \le 0\]</span></p></li>
+<li><p><strong>Dual feasibility condition:</strong> <span
+class="math display">\[\lambda^* \ge 0\]</span></p></li>
+</ol>
+<p>These are referred to as the <strong>KKT</strong>
+conditions.</p></li>
+</ol>
+<h2 id="karush-kuhn-tucker-kkt-conditions">Karush-Kuhn-Tucker (KKT)
+Conditions</h2>
+<ol>
+<li><p>The generalized form of the constraint optimization problem:
+<span class="math display">\[\begin{matrix}
+    &amp; {\displaystyle \min_x}\ f(x) &amp; \\[2ex]
+    \text{subject to } &amp; g_i(x) \le 0, &amp; i=1,2, \ldots, n
+\\[2ex]
+    &amp; h_j(x) = 0, &amp; j=1, 2, \ldots, m
+\end{matrix}\]</span> where <span class="math inline">\(f\)</span>,
+<span class="math inline">\(g_i\)</span>, <span
+class="math inline">\(h_j : \mathbb{R}^d\to \mathbb{R}\)</span> for
+<span class="math inline">\(i=1,2, \ldots, n\)</span>, <span
+class="math inline">\(j=1,2, \ldots, m\)</span>.</p></li>
+<li><p>The generalized <em>Lagrangian</em>: <span
+class="math display">\[\mathcal{L}(x, \lambda, \mu) = f(x) +
+\sum_{i=1}^n \lambda_i g_i(x) + \sum_{j=1}^m \mu_j h_j(x)\]</span> where
+<span class="math inline">\(x\in \mathbb{R}^d\)</span>, <span
+class="math inline">\(\lambda = \begin{bmatrix}
+    \lambda_1 &amp; \lambda_2 &amp; \ldots &amp; \lambda_n
+\end{bmatrix}^T\)</span>, <span class="math inline">\(\mu =
+\begin{bmatrix}
+    \mu_1 &amp; \mu_2 &amp; \ldots &amp; \mu_m
+\end{bmatrix}^T\)</span>.</p></li>
+<li><p>The scalars <span class="math inline">\(\lambda_i\)</span>s are
+called <em><strong>KKT multipliers</strong></em> while the scalars <span
+class="math inline">\(\mu_j\)</span>s are called the
+<em><strong>Lagrange multipliers</strong></em>.</p></li>
+<li><p>If <span class="math inline">\(x^*\)</span> be a <em>local</em>
+minimizer of <span class="math inline">\(f\)</span>, there exist <span
+class="math inline">\(\lambda_i^*\)</span> and <span
+class="math inline">\(\mu_j^*\)</span> satisfying the following
+conditions referred to as the KKT conditions:</p>
+<ol>
+<li><p><strong>Stationarity condition:</strong> <span
+class="math display">\[\nabla f(x^*) + \sum_{i=1}^n \lambda_i^*  \nabla
+g_i(x^*) + \sum_{j=1}^m \mu_j^* \nabla h_j(x^*) = 0\]</span></p></li>
+<li><p><strong>Complimentary slackness condition:</strong> <span
+class="math display">\[\lambda_i^*\  g_i(x^*) = 0,\quad i=1, 2, \ldots,
+n\]</span></p></li>
+<li><p><strong>Primal feasibility condition:</strong> <span
+class="math display">\[\begin{matrix}
+         g_i(x^*) \le 0 &amp; i = 1, 2, \ldots, n \\[2ex]
+         h_j(x^*) = 0 &amp; j =1, 2, \ldots, m
+      \end{matrix}\]</span></p></li>
+<li><p><strong>Dual feasibility condition:</strong> <span
+class="math display">\[\lambda_i^* \ge 0, \quad i = 1, 2, \ldots,
+n\]</span></p></li>
+</ol></li>
+<li><p>If <span class="math inline">\(f\)</span> and the inequality
+constraint functions <span class="math inline">\(g_i\)</span> are
+<em>convex</em>, then the local minimizer <span
+class="math inline">\(x^*\)</span> is also a <em>global</em>
+minimizer.</p></li>
+</ol>
+<h2  id="support-vector-machines-svm">Support Vector
+Machines (SVM)</h2>
+<ol>
+<li><p>An important ML task is to find a <em><strong>linear
+classifier</strong></em> that has a large <em>geometric margin</em>,
+i.e., whose <em>decision boundary</em> is well separated from all the
+training data points.</p></li>
+<li><p>Such a classifier is known as the <em><strong>Support Vector
+Machine</strong></em> or SVM for short.</p></li>
+<li><p>Given a dataset <span class="math display">\[\mathcal{D} =
+\{(x_1, y_1), (x_2, y_2), (x_3, y_3), \ldots, (x_n, y_n)\}\]</span> of
+data points <span class="math inline">\(x_i \in \mathbb{R}^d\)</span>
+and the corresponding labels <span class="math inline">\(y_i \in \{-1,
++1\}\)</span>.</p></li>
+<li><p>The SVM is a linear model that predicts a label for a input <span
+class="math inline">\(x\)</span> as <span class="math display">\[h_w(x)
+= \mathrm{sign} ( w^Tx )\]</span> with as large <em><strong>geometric
+margin</strong></em> (distance between the decision boundary and the
+nearest data point) as possible.</p></li>
+<li><p>The problem of finding the optimum weight <span
+class="math inline">\(w\)</span> reduces to a <em><strong>quadratic
+optimization</strong></em> problem: <span
+class="math display">\[\begin{matrix}
+      &amp;  {\displaystyle \min_w}\  \dfrac{1}{2} \Vert w \Vert^2 &amp;
+\\[3ex]
+      \text{subject to } &amp; 1-y_i w^T x_i \le 0, &amp; i = 1, 2,
+\ldots , n
+   \end{matrix}\]</span></p></li>
+<li><p>Since the objective function is quadratic, it is a convex
+function. In addition, the inequality constraint function is linear and
+hence also convex. As a result, any local optimum will be global
+minimum.</p></li>
+</ol>
+
+
+</div>
+<footer class="mt-auto" style="font-size: 0.8rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
