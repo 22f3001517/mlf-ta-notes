@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 10</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+            <li><a class="dropdown-item" href="week_9.html">Week 9</a></li>
+            <li><a class="dropdown-item" href="week_10.html">Week 10</a></li>
+            <li><a class="dropdown-item" href="week_11.html">Week 11</a></li>
+            <li><a class="dropdown-item" href="week_12.html">Week 12</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-10">Week 11</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#continuous-random-variables">Continuous Random Variables</a></li>
+      <li><a href="#two-random-variables">Two Random Variables</a></li>
+                  
+    </ul>
+  </div>
+  
+<h2 id="continuous-random-variables">Continuous Random Variables</h2>
+<ol>
+<li><p><strong>Random variable:</strong> A random variable <span
+class="math inline">\(X\)</span> is a function that maps the
+<em><strong>sample space</strong></em> <span
+class="math inline">\(\Omega\)</span> to the set of real numbers <span
+class="math inline">\(\mathbb{R}\)</span>. It assigns to each element
+<span class="math inline">\(\omega \in \Omega\)</span> one and only one
+value <span class="math inline">\(X(\omega) = x\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(X\)</span> be a random variable.
+Then its <strong><em>cumulative distribution function
+(cdf)</em></strong> is defined by <span class="math display">\[F_X(x) =
+P(X\le x)\]</span></p></li>
+<li><p>A random variable <span class="math inline">\(X\)</span> is a
+<strong><em>continuous random variable</em></strong> if its cumulative
+distribution function <span class="math inline">\(F_X(x)\)</span> is a
+continuous function <span class="math inline">\(\forall\)</span> <span
+class="math inline">\(x\in\mathbb{R}\)</span>.</p></li>
+<li><p>The <strong><em>probability density function (pdf)</em></strong>
+of a random variable <span class="math inline">\(X\)</span> is a
+<em>non-negative</em> function <span
+class="math inline">\(f_X(x)\)</span> such that <span
+class="math display">\[F_X(x) = \int_{-\infty}^x f_X(x) \ \mathrm dx,
+\quad \forall \ x \in \mathbb{R}\]</span></p></li>
+<li><p>A cdf <span class="math inline">\(F_X(x)\)</span> always has the
+following properties:</p>
+<ol>
+<li><p><span class="math inline">\({\displaystyle \lim_{x\to -\infty}
+F_X(x) = 0}\)</span></p></li>
+<li><p><span class="math inline">\({\displaystyle \lim_{x\to \infty}
+F_X(x) = 1}\)</span></p></li>
+<li><p><span class="math inline">\(F_X(x)\)</span> is a
+<strong><em>non-decreasing</em></strong> function.</p></li>
+</ol></li>
+<li><p>If <span class="math inline">\(f_X(x)\)</span> is the pdf of a
+random variable <span class="math inline">\(X\)</span>, then at the
+points where <span class="math inline">\(f_X(x)\)</span> is continuous,
+<span class="math display">\[\dfrac{\mathrm d F_X(x)}{\mathrm d x} =
+f_X(x)\]</span></p></li>
+<li><p>A pdf <span class="math inline">\(f_X(x)\)</span> always has the
+following properties:</p>
+<ol>
+<li><p><span class="math inline">\(f_X(x)\ge 0\ \forall\
+x\in\mathbb{R}\)</span></p></li>
+<li><p><span class="math inline">\(\int_{\mathbb{R}} f_X(x)\ \mathrm d x
+= 1\)</span>, where <span class="math inline">\(\int_A\)</span>
+represents integration over the set <span
+class="math inline">\(A\)</span>.</p></li>
+<li><p>If <span class="math inline">\(A\subset \mathbb{R}\)</span>, then
+<span class="math inline">\(P(A)=\int_A f_X(x)\ \mathrm dx\)</span>. In
+other words, <span class="math display">\[P(a\le X \le b ) = \int_a^b
+f_X(x) \ \mathrm dx\]</span></p></li>
+</ol></li>
+<li><p>The <strong><em>support</em></strong> of a random variable <span
+class="math inline">\(X\)</span> is <span
+class="math display">\[\textrm{support } X = \{ x \mid f_X(x) &gt; 0
+\}\]</span></p></li>
+<li><p>For a random variable <span class="math inline">\(X\)</span>, its
+<strong><em>expectation</em></strong> or <strong><em>expected
+value</em></strong> is <span class="math display">\[E[X] =
+\int_{-\infty}^\infty x f_X(x) \ \mathrm dx\]</span> often denoted as
+<span class="math inline">\(\mu_X\)</span>.</p></li>
+<li><p>If <span class="math inline">\(X\)</span> be a random variable
+and <span class="math inline">\(g(X)\)</span> be some function of the
+random variable, then <span class="math display">\[E[g(X)] =
+\int_{-\infty} ^\infty g(x) f_X(x) \ \mathrm dx\]</span></p></li>
+<li><p><strong><em>Expectation is a linear operation:</em></strong></p>
+<ol>
+<li><p><span class="math inline">\(E[aX+b] = a E[x] + b\)</span> for
+<span class="math inline">\(a, b \in \mathbb{R}\)</span></p></li>
+<li><p><span class="math inline">\(E[X_1+X_2+\ldots + X_n] = E[X_1] +
+E[X_2] + \ldots + E[X_n]\)</span></p></li>
+</ol></li>
+<li><p>For a random variable <span class="math inline">\(X\)</span>, its
+<strong><em>variance</em></strong>, denoted as <span
+class="math inline">\(\sigma_X^2\)</span>, is <span
+class="math display">\[\sigma_X^2 = \mathrm{Var}(X) = E[(X-\mu_X)^2] =
+E[X^2] - (E[X])^2\]</span> so that <span
+class="math display">\[\mathrm{Var}(X) = \int_{-\infty}^\infty
+(x-\mu_X)^2 f_X(x)\ \mathrm dx\]</span></p></li>
+<li><p>For a random variable <span class="math inline">\(X\)</span> and
+<span class="math inline">\(a, b \in \mathbb{R}\)</span>: <span
+class="math display">\[\mathrm{Var}(aX+b) = a^2
+\mathrm{Var}(X)\]</span></p></li>
+<li><p>If <span class="math inline">\(X\)</span> is a continuous random
+variable, and <span class="math inline">\(A\)</span> is the event that
+<span class="math inline">\(a&lt;X&lt;b\)</span> (where possibly <span
+class="math inline">\(b \to \infty\)</span> or <span
+class="math inline">\(a \to -\infty\)</span>), then the
+<strong><em>conditional</em></strong> pdf of <span
+class="math inline">\(X\)</span> given the event <span
+class="math inline">\(A\)</span> is <span
+class="math display">\[f_{X\mid A} (x) = \left\{ \begin{matrix}
+     \dfrac{f_X(x)}{P(A)} &amp; a\le x &lt; b \\[2ex]
+     0 &amp; \textrm{ otherwise}
+\end{matrix}\right.\]</span></p></li>
+<li><p>The <strong><em>conditional expectation</em></strong> of <span
+class="math inline">\(X\)</span> given <span
+class="math inline">\(A\)</span> is <span class="math display">\[E[X|A]
+= \int_{-\infty}^\infty x f_{X\mid A}(x)\ \mathrm{d} x\]</span></p></li>
+<li><p>The <strong><em>conditional expectation</em></strong> of <span
+class="math inline">\(g(X)\)</span> given <span
+class="math inline">\(A\)</span> is <span
+class="math display">\[E[g(X)|A] = \int_{-\infty}^\infty g(x) f_{X\mid
+A}(x)\ \mathrm{d} x\]</span></p></li>
+<li><p>The <strong><em>conditional variance</em></strong> of <span
+class="math inline">\(X\)</span> given <span
+class="math inline">\(A\)</span> is <span
+class="math display">\[\mathrm{Var}(X|A) = E[X^2|A] - \left(
+E[X|A]\right)^2\]</span></p></li>
+<li><p>For a random variable <span class="math inline">\(X\)</span> and
+any event <span class="math inline">\(A\)</span>, the <strong><em>total
+expectation</em></strong> of <span class="math inline">\(X\)</span> is
+<span class="math display">\[E[X] = P(A) E[X|A] + P(A^c)
+E[X|A^c]\]</span></p></li>
+<li><p>If <span class="math inline">\(Y=g(X)\)</span>, where <span
+class="math inline">\(g:\mathbb{R}\to \mathbb{R}\)</span> is a
+<em><strong>strictly monotonous differentiable</strong></em> function so
+that <span class="math inline">\(g\)</span> has a <strong><em>unique
+inverse</em></strong> and let <span class="math inline">\(h =
+g^{-1}\)</span>. Then, the pdf of the random variable <span
+class="math inline">\(Y\)</span> is given by <span
+class="math display">\[f_Y(y) = f_X(h(y)) \vert
+h&#39;(y)\vert\]</span></p></li>
+<li><p>If <span class="math inline">\(Y=g(X)\)</span>, where <span
+class="math inline">\(g:\mathbb{R}\to \mathbb{R}\)</span> is
+differentiable but <span class="math inline">\(g\)</span> is
+<strong><em>not</em></strong> strictly monotonous. However, there is a
+partition of <span class="math inline">\(\mathbb{R}\)</span> into
+<em>disjoint</em> intervals, say <span
+class="math inline">\(I_1\)</span>, <span
+class="math inline">\(I_2\)</span>, …in each of which <span
+class="math inline">\(g\)</span> is strictly monotonous and let <span
+class="math inline">\(g_k(x) = g(x)\)</span> for <span
+class="math inline">\(x\in I_k\)</span>. Then, the pdf of the random
+variable <span class="math inline">\(Y\)</span> is given by <span
+class="math display">\[F_Y(y) = \sum_{k} f_X\left(g_k^{-1}(y)\right)
+\left\vert \dfrac{\mathrm d}{\mathrm d y}
+g_k^{-1}(y)\right\vert\]</span></p></li>
+</ol>
+<h2 id="two-random-variables">Two Random Variables</h2>
+<ol>
+<li><p>Two random variables <span class="math inline">\(X\)</span> and
+<span class="math inline">\(Y\)</span> are <strong><em>jointly
+continuous</em></strong> if there exists a <em>non-negative</em>
+function <span class="math inline">\(f_{X,Y} : \mathbb{R}^2 \to
+\mathbb{R}\)</span>, such that, for any set <span
+class="math inline">\(A\subset \mathbb{R}^2\)</span>: <span
+class="math display">\[P\left( (X, Y) \in A \right) = \iint_A f_{X,Y}(x,
+y)\ \mathrm{d}x \,\mathrm{d} y\]</span> The function <span
+class="math inline">\(f_{X,Y}\)</span> is called the <strong><em>joint
+probability density function</em></strong> of <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>.</p></li>
+<li><p>The joint pdf of <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> must satisfy <span
+class="math display">\[\int_{-\infty}^\infty \int_{-\infty}^\infty
+f_{X,Y} (x, y) \ \mathrm{d}x \,\mathrm{d} y = 1\]</span></p></li>
+<li><p>The <strong><em>marginal</em></strong> pdf of <span
+class="math inline">\(X\)</span> can be obtained from the joint pdf by
+integrating over all values of <span class="math inline">\(y\)</span>:
+<span class="math display">\[f_X(x) = \int_{-\infty}^\infty f_{X,Y}(x,
+y) \  \mathrm dy, \quad \forall\, x\]</span></p></li>
+<li><p>The <strong><em>marginal</em></strong> pdf of <span
+class="math inline">\(Y\)</span> can be obtained from the joint pdf by
+integrating over all values of <span class="math inline">\(x\)</span>:
+<span class="math display">\[f_Y(x) = \int_{-\infty}^\infty f_{X,Y}(x,
+y) \  \mathrm dx, \quad \forall\, y\]</span></p></li>
+<li><p>If <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> are jointly continuous, the
+<strong><em>conditional pdf</em></strong> of <span
+class="math inline">\(X\)</span> given <span
+class="math inline">\(Y\)</span> is <span
+class="math display">\[f_{X\mid Y} (x\mid y) =
+\dfrac{f_{X,Y}(x,y)}{f_Y(y)}\]</span></p></li>
+<li><p>For two jointly continuous random variables <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>:</p>
+<ol>
+<li><p>The expected value of <span class="math inline">\(X\)</span>
+given <span class="math inline">\(Y=y\)</span> is <span
+class="math display">\[E[X|Y=y] = \int_{-\infty}^\infty x f_{X\mid
+Y}(x\mid y)\ \mathrm{d} x\]</span></p></li>
+<li><p>For a function <span class="math inline">\(g(X)\)</span> of <span
+class="math inline">\(X\)</span> <span
+class="math display">\[E[g(X)|Y=y] = \int_{-\infty}^\infty g(x) f_{X\mid
+Y}(x\mid y)\ \mathrm{d} x\]</span></p></li>
+<li><p>The <strong><em>conditional variance</em></strong> of <span
+class="math inline">\(X\)</span> given <span
+class="math inline">\(A\)</span> is <span
+class="math display">\[\mathrm{Var}(X|Y=y) = E[X^2|Y=y] - \left(
+E[X|Y=y]\right)^2\]</span></p></li>
+</ol></li>
+<li><p>If two jointly continuous random variables are independent if and
+only if <span class="math display">\[f_{X\mid Y}(x|y) = f_X(x)\]</span>
+Equivalently, two jointly continuous random variables are independent if
+and only if <span class="math display">\[f_{X, Y}(x,y) = f_X(x)
+f_Y(y)\]</span></p></li>
+<li><p>For independent random variables <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> <span class="math display">\[E[XY] =
+E[X]E[Y]\]</span></p></li>
+<li><p>If <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> be independent random variables, then
+<span class="math inline">\(\forall\)</span> functions <span
+class="math inline">\(g\)</span> and <span
+class="math inline">\(h\)</span> <span class="math display">\[E[g(X)
+h(Y)] = E[g(X)] E[h(X)]\]</span></p></li>
+<li><p><strong>Special distributions of <em>independent</em> random
+variables</strong>: Let <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> be two independent random variables,
+with pdf <span class="math inline">\(f_X(x)\)</span>, <span
+class="math inline">\(f_Y(x)\)</span> and cdf <span
+class="math inline">\(F_X(x)\)</span>, <span
+class="math inline">\(F_Y(x)\)</span>, respectively.</p>
+<ol>
+<li><p><strong>Sum:</strong> The pdf of <span
+class="math inline">\(Z=X+Y\)</span> is obtained using the
+<strong><em>convolution integral</em></strong>: <span
+class="math display">\[f_Z(z) = \int_{-\infty}^\infty f_X(x) f_Y(z-x)\
+\mathrm{d}x\]</span></p></li>
+<li><p><strong>Maximum:</strong> The cdf of the function <span
+class="math inline">\(Z = \max \{X, Y\}\)</span> is <span
+class="math display">\[F_Z(z) = F_X(z) F_Y(z)\]</span></p></li>
+<li><p><strong>Minimum:</strong> The cdf of the function <span
+class="math inline">\(Z = \min \{X, Y\}\)</span> is <span
+class="math display">\[F_Z(z) = 1-\left(1-F_X(z)\right)\left(1-
+F_Y(z)\right)\]</span></p></li>
+</ol></li>
+<li><p>If <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> are random variables with expectations
+<span class="math inline">\(\mu_X\)</span> and <span
+class="math inline">\(\mu_Y\)</span> respectively, then their
+<strong><em>covariance</em></strong> is defined to be <span
+class="math display">\[\mathrm{Cov}(X,Y) = E[(X-\mu_X)(Y-\mu_Y)] =
+E[XY]-\mu_X\mu_Y\]</span></p></li>
+<li><p>The <strong><em>correlation coefficient</em></strong> of random
+variables <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> is defined to be <span
+class="math display">\[\rho =
+\dfrac{\mathrm{Cov}(X,Y)}{\sqrt{\mathrm{Var}(X)\mathrm{Var}(Y)}}\]</span></p></li>
+<li><p>If the random variables <span class="math inline">\(X\)</span>
+and <span class="math inline">\(Y\)</span> are independent, then <span
+class="math display">\[\mathrm{Cov}(X,Y) = 0\]</span> (Note: <em>the
+converse need not be true.</em>)</p></li>
+<li><p><strong>Transformed random variables:</strong> Suppose the random
+variables <span class="math inline">\(X_1\)</span>, <span
+class="math inline">\(X_2\)</span> are <em>transformed</em> to random
+variables <span class="math inline">\(Y_1\)</span>, <span
+class="math inline">\(Y_2\)</span> by some <strong><em>one to
+one</em></strong> mapping: <span class="math display">\[\begin{matrix}
+    Y_1 = u_1(X_1, X_2),\\
+    Y_2 = u_2(X_1, X_2)
+  \end{matrix}\]</span> which can be inverted to <span
+class="math display">\[\begin{matrix}
+    X_1 = w_1(Y_1, Y_2),\\
+    X_2 = w_2(Y_1, Y_2)
+  \end{matrix}\]</span> Let <span class="math inline">\(J\)</span> be
+the <strong><em>Jacobian</em></strong> of this transformation: <span
+class="math display">\[J = \det \begin{bmatrix}
+     \dfrac{\partial w_1}{\partial y_1} &amp; \dfrac{\partial
+w_1}{\partial y_2} \\[3ex]
+     \dfrac{\partial w_2}{\partial y_1} &amp; \dfrac{\partial
+w_2}{\partial y_2}
+\end{bmatrix}\]</span> Then the joint pdf of <span
+class="math inline">\(Y_1\)</span>, <span
+class="math inline">\(Y_2\)</span> is <span
+class="math display">\[f_{Y_1, Y_2} (y_1, y_2) = f_{X_1, X_2} \left(
+w_1(y_1, y_2), w_2(y_1, y_2)\right) |J|\]</span> where <span
+class="math inline">\(|\cdot|\)</span> represents the absolute
+value.</p></li>
+</ol>
+
+
+
+</div>
+<footer class="mt-auto" style="font-size: 0.8rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

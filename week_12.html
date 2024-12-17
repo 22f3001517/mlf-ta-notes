@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Week 10</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+  </script>
+  <script type="text/javascript" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+            <li><a class="dropdown-item" href="week_9.html">Week 9</a></li>
+            <li><a class="dropdown-item" href="week_10.html">Week 10</a></li>
+            <li><a class="dropdown-item" href="week_11.html">Week 11</a></li>
+            <li><a class="dropdown-item" href="week_12.html">Week 12</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<h1  id="week-10">Week 12</h1>
+<!-- Table of Contents -->
+  <div class="toc mt-4 mb-4 p-3 border rounded bg-light">
+    
+    <ul>
+      <li><a href="#random-vectors">Random Vectors</a></li>
+      <li><a href="#bivariate-and-multivariate-normal">Bivariate
+and Multivariate Normal</a></li>
+      <li><a href=#maximum-likelihood-estimation">Maximum Likelihood Estimation </a></li>   
+      <li><a href="#linear-regression-with-gaussian-noise">Linear Regression with Gaussian Noise </a></li> 
+      <li><a href="#gaussian-mixture-model">Gaussian Mixture Model </a></li>      
+      <li><a href="#some-inequalities-and-clt">Some Inequalities and CLT</a></li>
+    </ul>
+  </div>
+  
+  
+ <h2 id="random-vectors">Random Vectors</h2>
+<ol>
+<li><p>A <strong><em>random vector</em></strong> <span
+class="math inline">\(X\)</span> is a vector, each of whose element is a
+random variable: <span class="math display">\[X = \begin{bmatrix}
+    X_1 \\ X_2 \\ \vdots \\ X_n
+\end{bmatrix}\]</span></p></li>
+<li><p>The <strong><em>mean vector</em></strong> of the random vector
+<span class="math inline">\(X\)</span> is <span
+class="math display">\[E[X]= \begin{bmatrix}
+    E[X_1] \\ E[X_2] \\ \vdots \\ E[X_n]
+\end{bmatrix}\]</span></p></li>
+<li><p>A <strong><em>random matrix</em></strong> <span
+class="math inline">\(M\)</span> is a matrix, each of whose element is a
+random variable: <span class="math display">\[X = \begin{bmatrix}
+    X_{11} &amp; X_{12} &amp; \ldots &amp; X_{1n}\\
+    X_{21} &amp; X_{22} &amp; \ldots &amp; X_{2n} \\
+    \vdots &amp; \cdots &amp; \vdots &amp; \vdots \\
+    X_{m1} &amp; X_{m2} &amp; \ldots &amp; X_{mn}
+\end{bmatrix}
+= [X_{ij}]_{m\times n}\]</span></p></li>
+<li><p>The <strong><em>mean matrix</em></strong> of the random matrix
+<span class="math inline">\(M\)</span> is <span
+class="math display">\[E[M]= \begin{bmatrix}
+    E[X_{11}] &amp; E[X_{12}] &amp; \ldots &amp; E[X_{1n}]\\
+    E[X_{21}] &amp; E[X_{22}] &amp; \ldots &amp; E[X_{2n}] \\
+    \vdots &amp; \cdots &amp; \vdots &amp; \vdots \\
+    E[X_{m1}] &amp; E[X_{m2}] &amp; \ldots &amp; E[X_{mn}]
+\end{bmatrix}
+= [E[X_{ij}]]_{m\times n}\]</span></p></li>
+<li><p>The <strong><em>covariance matrix</em></strong> of a random
+vector <span class="math inline">\(X\)</span> with mean vector <span
+class="math inline">\(\mu\)</span> is defined as <span
+class="math display">\[\mathrm{Cov}(X) = E[(X-\mu)(X-\mu)^T]\]</span>
+which can be simplified to <span class="math display">\[\mathrm{Cov}(X)
+= \begin{bmatrix}
+    \mathrm{Var}(X_1) &amp; \mathrm{Cov}(X_1, X_2)  &amp; \ldots &amp;
+\mathrm{Cov}(X_1, X_n) \\
+    \mathrm{Cov}(X_2, X_1) &amp; \mathrm{Var}(X_2)  &amp; \ldots &amp;
+\mathrm{Cov}(X_2, X_n) \\
+    \vdots &amp; \vdots &amp;  \ldots &amp; \vdots  \\
+    \mathrm{Cov}(X_n, X_1) &amp; \mathrm{Cov}(X_n, X_2)  &amp; \ldots
+&amp; \mathrm{Var}(X_n)
+\end{bmatrix}\]</span></p></li>
+<li><p>Let <span class="math inline">\(X\)</span> be an <span
+class="math inline">\(n\)</span>-dimensional random vector and the
+random vector <span class="math inline">\(Y\)</span> be defined as <span
+class="math display">\[Y=AX+b,\]</span> where <span
+class="math inline">\(A\)</span> is a constant <span
+class="math inline">\(m \times n\)</span> matrix and <span
+class="math inline">\(b\)</span> is a fixed <span
+class="math inline">\(m\)</span>-dimensional vector. Then: <span
+class="math display">\[E[Y]=AE[X]+b\]</span> and <span
+class="math display">\[\mathrm{Cov}(Y) = A
+\mathrm{Cov}(X)A^T\]</span></p></li>
+</ol>
+<h2 id="bivariate-and-multivariate-normal">Bivariate
+and Multivariate Normal</h2>
+<ol>
+<li><p>Two random variable <span class="math inline">\(X\)</span> and
+<span class="math inline">\(Y\)</span> are said to be
+<strong><em>bivariate normal</em></strong> or <strong><em>jointly
+normal</em></strong> if <span class="math inline">\(aX+bY\)</span> has a
+normal distribution for all <span
+class="math inline">\(a,b\in\mathbb{R}\)</span>.</p></li>
+<li><p>If <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> are jointly normal, then <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> must be individually normal.</p></li>
+<li><p>If <span class="math inline">\(X\sim \mathcal{N}(\mu_X,
+\sigma_X^2)\)</span> and <span class="math inline">\(Y\sim
+\mathcal{N}(\mu_Y, \sigma_Y^2)\)</span> are <em>independent</em>, then
+they are jointly normal.</p></li>
+<li><p>If <span class="math inline">\(X\sim \mathcal{N}(\mu_X,
+\sigma_X^2)\)</span> and <span class="math inline">\(Y\sim
+\mathcal{N}(\mu_Y, \sigma_Y^2)\)</span> are jointly normal then <span
+class="math display">\[X+Y \sim \mathcal{N}\left( \mu_X+\mu_Y,
+\sigma_X^2 + \sigma_Y^2 + 2 \rho \sigma_X \sigma_Y \right)\]</span>
+where <span class="math inline">\(\rho\)</span> is the <em>correlation
+coefficient</em> of <span class="math inline">\(X\)</span>, and <span
+class="math inline">\(Y\)</span>.</p></li>
+<li><p>If <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> are bivariate normal and uncorrelated,
+then they are independent.</p></li>
+<li><p>If for <span class="math inline">\(i=1, 2, \ldots n\)</span>, the
+random variables <span class="math inline">\(Z_i\)</span>’s are i.i.d.
+and <strong><em>standard normal</em></strong>: <span
+class="math display">\[Z_i \sim \mathcal{N}(0,1), \quad i=1, 2, \ldots,
+n\]</span> then the vector <span class="math display">\[Z =
+\begin{bmatrix}
+    Z_1 \\ Z_2 \\ \vdots \\ Z_n
+\end{bmatrix}\]</span> is called the <strong><em>standard normal
+vector</em></strong>.</p></li>
+<li><p>Taking <span class="math inline">\(z = [z_1\ z_2\ \ldots \,
+z_n]^T\)</span>, the pdf of the standard normal vector <span
+class="math inline">\(Z\)</span> is <span class="math display">\[f_Z(z)
+= \dfrac{1}{(2\pi)^{n/2}} e^{-\frac{1}{2}z^Tz} = \dfrac{1}{(2\pi)^{n/2}}
+e^{-\frac{1}{2}\Vert z \Vert^2}\]</span></p></li>
+<li><p><span class="math inline">\(E[Z] = 0\)</span> and <span
+class="math inline">\(\mathrm{Cov}(Z) = I\)</span>, the unit
+matrix.</p></li>
+<li><p>Let <span class="math inline">\(A\)</span> be a (non-singular)
+<span class="math inline">\(n\times n\)</span> matrix and <span
+class="math inline">\(\mu\)</span> be an <span
+class="math inline">\(n\)</span>-dimensional vector and let <span
+class="math display">\[X = AZ + \mu\]</span> Introduce the notation
+<span class="math inline">\(\Sigma = AA^T\)</span>. Then <span
+class="math display">\[E[X] = A E[Z] + \mu = \mu\]</span> and <span
+class="math display">\[\mathrm{Cov}(X) = AA^T = \Sigma\]</span></p></li>
+<li><p>Transformation: <span class="math display">\[X = AZ +
+\mu\]</span> gives <span class="math display">\[Z=A^{-1}(X-\mu)\]</span>
+Then Jacobian is <span class="math inline">\(\det(A^{-1})=
+\dfrac{1}{\sqrt{\det(\Sigma)}}\)</span></p></li>
+<li><p>The pdf of <span class="math inline">\(X\)</span> is <span
+class="math display">\[f_X(x) = \dfrac{1}{(2\pi)^{n/2} \sqrt{\Sigma}}
+e^{-\frac{1}{2} (x-\mu)^T \Sigma^{-1}(x-\mu)}\]</span> Hence, <span
+class="math inline">\(X\sim \mathcal{N}(\mu, \Sigma)\)</span></p></li>
+<li><p>Let <span class="math inline">\(X\sim \mathcal{N}(\mu_X,
+\Sigma_X)\)</span> be an <span
+class="math inline">\(n\)</span>-dimensional normal vector. Further,
+suppose <span class="math inline">\(B\)</span> be a full rank <span
+class="math inline">\(m\times n\)</span> constant matrix and <span
+class="math inline">\(b\)</span> is an <span
+class="math inline">\(m\)</span>-dimensional constant vector. Then the
+random vector <span class="math display">\[Y = BX + b\]</span> is also
+distributed normally with mean vector <span
+class="math inline">\(\mu_Y\)</span> and covariance matrix <span
+class="math inline">\(\Sigma_Y\)</span>, given by <span
+class="math display">\[\begin{matrix}
+   &amp;  \mu_Y&amp; = &amp; B \mu_X +b \\[3ex]
+    \text{and} &amp; \Sigma_Y &amp;=&amp; B \Sigma_X B^T
+\end{matrix}\]</span> That is <span class="math display">\[BX+b \sim
+\mathcal{N}\left(B\mu_X + b , B\Sigma_X B^T\right)\]</span></p></li>
+<li><p>If <span class="math inline">\(X\sim \mathcal{N}(\mu,
+\Sigma)\)</span>, then its components <span
+class="math inline">\(X_i\)</span> and <span
+class="math inline">\(X_j\)</span> are <em>independent</em>
+<strong><em>if and only if</em></strong> <span
+class="math inline">\(\Sigma_{ij} = 0\)</span>.</p></li>
+</ol>
+<h2 id="maximum-likelihood-estimation">Maximum
+Likelihood Estimation</h2>
+<ol>
+<li><p>Let <span class="math inline">\(X_1\)</span>, <span
+class="math inline">\(X_2\)</span>, <span
+class="math inline">\(X_3\)</span>, …, <span
+class="math inline">\(X_n\)</span> be a random i.i.d. sample drawn from
+a distribution with a parameter <span
+class="math inline">\(\theta\)</span>, which can be a vector <span
+class="math inline">\(\theta = [\theta_1\, \theta_2\, \ldots,
+\theta_k]^T\)</span>. Suppose that <span
+class="math inline">\(x_1\)</span>, <span
+class="math inline">\(x_2\)</span>, <span
+class="math inline">\(x_3\)</span>, …, <span
+class="math inline">\(x_n\)</span> are the observed values of <span
+class="math inline">\(X_1\)</span>, <span
+class="math inline">\(X_2\)</span>, <span
+class="math inline">\(X_3\)</span>, …, <span
+class="math inline">\(X_n\)</span>. The
+<strong><em>likelihood</em></strong> function is then defined as <span
+class="math display">\[\begin{aligned}
+   L(x_1, x_2, \ldots, x_n; \theta) &amp; = &amp; f_{X_1, X_2, \ldots,
+X_n}(x_1, x_2, \ldots, x_n; \theta) \\[2ex]
+   &amp; = &amp; \prod_{i=1}^n f_{X_i}(x_i;\theta)
+\end{aligned}\]</span></p></li>
+<li><p>A <strong><em>maximum likelihood estimate (MLE)</em></strong> of
+<span class="math inline">\(\theta\)</span>, represented as <span
+class="math inline">\(\hat{\theta}_{ML}\)</span> is a value of <span
+class="math inline">\(\theta\)</span> that
+<strong><em>maximizes</em></strong> the likelihood function.</p></li>
+<li><p>Often, it is easier to maximize the <strong><em>log
+likelihood</em></strong> function <span
+class="math display">\[\ln{L(x_1, x_2, \ldots, x_n; \theta)} =
+\sum_{i=1}^n \ln{f_{X_i}(x_i;\theta)}\]</span></p></li>
+<li><p>MLE of some common distributions on the basis of the observed
+sample values <span class="math inline">\(X_1 = x_1\)</span>, <span
+class="math inline">\(X_2=x_2\)</span>, …, <span
+class="math inline">\(X_n = x_n\)</span>, with <span
+class="math display">\[\bar{x} = \dfrac{x_1+x_2+\ldots +x_n}{n}\]</span>
+and <span class="math display">\[\mathrm{S.D.} = \sqrt{\dfrac{1}{n}
+\sum_{i=1}^n (x_i-\bar{x})^2}\]</span></p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Distribution</th>
+<th style="text-align: center;">pmf/pdf</th>
+<th style="text-align: center;">Parameter (<span
+class="math inline">\(\theta\)</span>)</th>
+<th style="text-align: left;">MLE (<span
+class="math inline">\(\hat{\theta}_{ML})\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Bernoulli</td>
+<td style="text-align: center;"><span
+class="math inline">\(\begin{matrix}
+   p^x(1-p)^{1-x}, \\ x\in \{0, 1\}
+\end{matrix}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(p\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\hat{p} =
+\bar{x}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Binomial</td>
+<td style="text-align: center;"><span
+class="math inline">\(\begin{matrix}
+    {}^nC_x \ p^x(1-p)^{n-x}, \\ x=0,1, \ldots, n
+\end{matrix}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(p\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\hat{p} =
+\dfrac{success}{n}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Poisson</td>
+<td style="text-align: center;"><span
+class="math inline">\(\begin{matrix}  \dfrac{\lambda^x
+e^{-\lambda}}{x!}, \\[2ex] x = 0, 1, 2,
+\ldots  \end{matrix}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\lambda\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\hat{\lambda}
+= \bar{x}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Uniform</td>
+<td style="text-align: center;"><span
+class="math inline">\(\begin{matrix}
+    \dfrac{1}{b-a}, x\in[a,b] \\
+    0 \ \mathrm{otherwise}
+\end{matrix}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(a,b\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\begin{matrix}
+    \hat{a} = \min \{x_i\} \\ \hat{b} = \max \{x_i\}
+\end{matrix}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Exponential</td>
+<td style="text-align: center;"><span
+class="math inline">\(\begin{matrix}  \lambda  e^{-\lambda x}, \\ x \ge
+0  \end{matrix}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\lambda\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\hat{\lambda}
+= \dfrac{1}{\bar{x}}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Normal</td>
+<td style="text-align: center;"><span
+class="math inline">\(\begin{matrix}  \dfrac{1}{\sigma \sqrt{2\pi}}
+e^{-\frac{1}{2\sigma^2}(x-\mu)^2}, \\ x \in
+\mathbb{R}  \end{matrix}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu,
+\sigma\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\begin{matrix}
+    \hat{\mu}  =  \bar{x} \\ \hat{\sigma}  =   \mathrm{S.D.}
+\end{matrix}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></li>
+</ol>
+<h2 id="linear-regression-with-gaussian-noise">Linear
+Regression with Gaussian Noise</h2>
+<ol>
+<li><p>Given the data set <span class="math display">\[\mathcal{D} = \{
+(x_i, y_i) \mid i=1,2,\ldots, n\}\]</span> where <span
+class="math inline">\(x_i\in \mathbb{R}^d\)</span> and <span
+class="math inline">\(y_i \in \mathbb{R}\)</span>, a <strong><em>linear
+regression</em></strong> model tries to find the “best” linear function
+that fits the data set.</p></li>
+<li><p>Defining the vector <span class="math inline">\(X=[x_1\, x_2\,
+\ldots\, x_n]^T\)</span> and <span class="math inline">\(Y=[y_1\, y_2\,
+\ldots\, y_n]^T\)</span>, a model is <span class="math display">\[Y=w^TX
++ \epsilon\]</span> for a weight vector <span class="math inline">\(w
+\in \mathbb{R}^d\)</span> and a <strong><em>zero mean Normal
+vector</em></strong> whose each component are i.i.d. and <span
+class="math inline">\(\epsilon_i\sim \mathcal{N}(0, \sigma^2)\)</span>.
+Then <span class="math display">\[Y\mid X \sim \mathcal{N}(w^TX,
+\sigma^2)\]</span> Note that <span class="math inline">\(X\)</span> and
+<span class="math inline">\(\theta\)</span> are fixed but <span
+class="math inline">\(Y\)</span> is a random variable.</p></li>
+<li><p>Considering the unknown weight <span
+class="math inline">\(w\)</span> as a parameter, maximum likelihood
+estimation can be used to obtain the optimum weight. This turns out to
+be the same problem as <strong><em>minimize</em></strong> <span
+class="math display">\[\dfrac{1}{2} \sum_{i=1}^n (w^Tx_i -
+y_i)^2\]</span></p></li>
+</ol>
+<h2 id="gaussian-mixture-model">Gaussian Mixture Model</h2>
+<ol>
+<li><p>An important <strong><em>unsupervised</em></strong> task in
+Machine Learning is to group an <strong><em>unlabeled</em></strong> data
+<span class="math display">\[\mathcal{D} = \{x_1, x_2, \ldots, x_n\},
+\quad x_i \in \mathbb{R}^d\]</span> into some kind of homogeneous
+<strong><em>clusters</em></strong>.</p></li>
+<li><p>An approach is to assume that the data was produced by a
+generative model and then adjust the model parameters to maximize the
+probability that the model would produce exactly the data that is
+observed.</p></li>
+<li><p>Let the clusters be assigned labels as <span
+class="math inline">\(1\)</span>, <span
+class="math inline">\(2\)</span>, <span
+class="math inline">\(\ldots\)</span>, <span
+class="math inline">\(K\)</span>, and let <span
+class="math inline">\(Z\)</span> be a random variable that takes on
+values from these cluster labels with certain probabilities: <span
+class="math display">\[P(Z=k) = \pi_k , \quad k = 1, 2, \ldots,
+K\]</span></p></li>
+<li><p>As a result, <span class="math inline">\(\pi_k \ge 0\)</span> for
+<span class="math inline">\(k = 1, 2, \ldots, K\)</span> and <span
+class="math display">\[\sum_{k=1}^K \pi_k = 1\]</span></p></li>
+<li><p>Assume that the observed data vector <span
+class="math inline">\(x=[x_1\, x_2\, \ldots \, x_n]^T\)</span> is the
+value attained by the random vector <span class="math display">\[X =
+\begin{bmatrix}
+    X_1 \\ X_2 \\ \vdots \\ X_n
+\end{bmatrix}\]</span></p></li>
+<li><p>A <strong><em>mixture model</em></strong> assumes a probability
+density of the form <span class="math display">\[P(X=x) = \sum_{k=1}^K
+P(Z=k) P(X=x|Z=k)\]</span></p></li>
+<li><p>It is assumed that given <span
+class="math inline">\(Z=k\)</span>, the random vector <span
+class="math inline">\(X\)</span> is distributed <em>normally</em> with
+mean vector <span class="math inline">\(\mu_k\)</span> and variance
+matrix <span class="math inline">\(\Sigma_k\)</span>: <span
+class="math display">\[X|Z=k \sim \mathcal{N}\left( \mu_k, \Sigma_k
+\right)\]</span></p></li>
+<li><p>The <strong><em>Gaussian mixture model (GMM)</em></strong>
+represents the distribution <span class="math display">\[P(X=x) =
+\sum_{k=1}^K \pi_k \,\mathcal{N}\left( x \mid \mu_k,
+\Sigma_k\right)\]</span> with <span class="math inline">\(\pi_k \ge
+0\)</span> for <span class="math inline">\(k=1, 2, \ldots, K\)</span>
+and <span class="math inline">\({\displaystyle \sum_{k=1}^K \pi_k =
+1}\)</span>.</p></li>
+<li><p>GMM is a density estimator.</p></li>
+<li><p>The complete GMM is parametrized by the mean vectors, covariance
+matrices and the mixture weights from all component densities,
+collectively represented as <span class="math display">\[\lambda = \{
+\pi_k, \mu_k, \Sigma_k \}, \quad k=1, 2, \ldots, K\]</span></p></li>
+<li><p>The maximum likelihood estimate of the parameters <span
+class="math inline">\(\lambda\)</span> is obtained iteratively using a
+variant of <strong><em>expectation-maximization (EM)</em></strong>
+algorithm.</p></li>
+<li><p>In EM algorithm, start from an initial parameter set <span
+class="math inline">\(\lambda_0\)</span> and iterate through the data
+points one by one and perform the following two steps till either the
+algorithm converges or an upper limit of iteration is reached.</p></li>
+<li><p>For the data point <span
+class="math inline">\(x_\ell\)</span>:</p>
+<ul>
+<li><p><strong>E step:</strong> Evaluate the
+<strong><em>responsibilities</em></strong> using the current parameter:
+<span class="math display">\[\gamma(z_{\ell k}) = \dfrac{\pi_k \,
+\mathcal{N}(x_\ell | \mu_k, \Sigma_k)} {\displaystyle \sum_{j=1}^K \pi_j
+\, \mathcal{N}(x_\ell | \mu_j, \Sigma_j)}\]</span> The
+<em>responsibility</em> for a data point is the probability that it
+belongs to a cluster: <span class="math display">\[\gamma(z_{\ell k}) =
+P(Z=k|X=x_\ell)\]</span></p></li>
+<li><p><strong>M step:</strong> Re-estimate the parameters using the
+current responsibilities: <span
+class="math display">\[\mu_k^\mathrm{new} = \dfrac{1}{N_k}
+\sum_{\ell=1}^n \gamma(z_{\ell k}) x_\ell\]</span> <span
+class="math display">\[\Sigma_k^\mathrm{new} = \dfrac{1}{N_k}
+\sum_{\ell=1}^n \gamma(z_{\ell k}) (x_\ell -\mu_k^\mathrm{new})(x_\ell
+-\mu_k^\mathrm{new})^T\]</span> <span
+class="math display">\[\pi_{k}^\mathrm{new} = \dfrac{N_k}{n}\]</span>
+where <span class="math display">\[N_k = \sum_{\ell = 1}^n
+\gamma(z_{\ell k})\]</span></p></li>
+</ul></li>
+</ol>
+<h2 id="some-inequalities-and-clt">Some Inequalities
+and CLT</h2>
+<ol>
+<li><p><strong>Markov’s Inequality:</strong> Let <span
+class="math inline">\(X\)</span> be a non-negative random variable with
+a finite mean <span class="math inline">\(\mu\)</span>. Then <span
+class="math display">\[P(X\ge c) \le \dfrac{\mu}{c}\]</span></p></li>
+<li><p><strong>Chebyshev’s Inequality:</strong> Let <span
+class="math inline">\(X\)</span> be a random variable with <span
+class="math display">\[E[X]=\mu \quad \text{and} \quad  \mathrm{Var}(X)
+= \sigma^2\]</span> Then <span class="math display">\[P(|X-\mu|\ge
+k\sigma ) \le \dfrac{1}{k^2}\]</span></p></li>
+<li><p><strong>Hoeffding Inequality:</strong> Suppose <span
+class="math inline">\(X_1\)</span>, <span
+class="math inline">\(X_2\)</span>, …, <span
+class="math inline">\(X_n\)</span> be i.i.d.’s so that <span
+class="math inline">\(E[X_i] = \mu\)</span> and <span
+class="math inline">\(a\le X_i \le b\)</span>. Define <span
+class="math display">\[\overline{X}= \dfrac{1}{n} \sum_{i=1}^n
+X_i\]</span> Then <span class="math display">\[P(|\bar{X}-\mu| \ge
+\delta ) \le 2
+\exp{\left(-\dfrac{2n\delta^2}{(b-a)^2}\right)}\]</span></p></li>
+<li><p><strong>Weak law of large numbers:</strong> Suppose <span
+class="math inline">\(X_1\)</span>, <span
+class="math inline">\(X_2\)</span>, …, <span
+class="math inline">\(X_n\)</span> <span
+class="math inline">\(\sim\)</span> i.i.d. <span
+class="math inline">\(X\)</span> so that <span
+class="math inline">\(E[X] = \mu\)</span> and <span
+class="math inline">\(\mathrm{Var}(X)=\sigma^2\)</span>. Define the
+sample mean <span class="math display">\[\overline{X} = \dfrac{1}{n}
+\sum_{i=1}^n X_i\]</span> Then <span
+class="math display">\[P(|\bar{X}-\mu| \ge \delta ) \le
+\dfrac{\sigma^2}{n\delta^2}\]</span></p></li>
+<li><p><strong>Central Limit Theorem (CLT):</strong> Suppose <span
+class="math inline">\(X_1\)</span>, <span
+class="math inline">\(X_2\)</span>, …, <span
+class="math inline">\(X_n\)</span> <span
+class="math inline">\(\sim\)</span> i.i.d. <span
+class="math inline">\(X\)</span> so that <span
+class="math inline">\(E[X] = \mu\)</span> and <span
+class="math inline">\(\mathrm{Var}(X)=\sigma^2\)</span>. Define <span
+class="math display">\[Y = X_1 + X_2 + \ldots + X_n\]</span> Then <span
+class="math display">\[\dfrac{Y-n\mu}{\sigma \sqrt{n}} \approx
+\mathcal{N}(0, 1)\]</span></p></li>
+</ol>
+
+
+</div>
+<footer class="mt-auto" style="font-size: 0.8rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
