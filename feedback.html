@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Feedback Form</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+   <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header (Navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">MLF Summary</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <!-- Dropdown for Weeks -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="weeksDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Weeks
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="weeksDropdown">
+            <!-- Dynamically insert week links -->
+            <li><a class="dropdown-item" href="week_3.html">Week 3</a></li>
+            <li><a class="dropdown-item" href="week_4.html">Week 4</a></li>
+            <li><a class="dropdown-item" href="week_5.html">Week 5</a></li>
+            <li><a class="dropdown-item" href="week_6.html">Week 6</a></li>
+            <li><a class="dropdown-item" href="week_7.html">Week 7</a></li>
+            <li><a class="dropdown-item" href="week_8.html">Week 8</a></li>
+            <li><a class="dropdown-item" href="week_9.html">Week 9</a></li>
+            <li><a class="dropdown-item" href="week_10.html">Week 10</a></li>
+            <li><a class="dropdown-item" href="week_11.html">Week 11</a></li>
+            <li><a class="dropdown-item" href="week_12.html">Week 12</a></li>
+          </ul>
+        </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+         <a class="nav-link" href="feedback.html">Feedback</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+    <h1>Feedback Form</h1>
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSdUcQNOiweKf8dOhIEtipE-AZ05uEYZi-arHPAckbZkrOvYgg/formResponse" method="POST" target="hidden_iframe"
+  onsubmit="handleSubmission()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Your Name</label>
+        <input type="text" id="name" name="entry.1934664574" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Your Email</label>
+        <input type="email" id="email" name="entry.1632245093" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="feedback" class="form-label">Your Valuable Feedback</label>
+        <textarea id="feedback" name="entry.1445900015" class="form-control" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  
+ <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+<footer class="mt-auto" style="font-size: 0.8rem; text-align: center; width: 100%; padding: 10px;">
+  <p class="mb-0">Anant Kumar | Course TA: Machine Learning Foundations | T2 & T3 2024</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function handleSubmission() {
+      setTimeout(function() {
+        window.location.href = 'thank_you.html';
+      }, 500); // Adjust timing if necessary
+    }
+  </script>
+</body>
+</html>
