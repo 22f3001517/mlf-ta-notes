@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2D Linear Transformation Visualizer</title>
+  
+  <style>
+  /* ----------------------------------- */
+    /* GLOBAL & STRUCTURE */
+    /* ----------------------------------- */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: row; /* Default: controls on left, canvas on right */
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f4f6f8;
+    }
+
+    /* Make the layout vertical on small screens (mobile) */
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+      #controls {
+        width: 100% !important; /* Take full width on mobile */
+      }
+    }
+
+    /* ----------------------------------- */
+    /* CONTROLS PANEL */
+    /* ----------------------------------- */
+    #controls {
+      width: 340px;
+      min-width: 300px;
+      background-color: #fff;
+      border-right: 1px solid #ddd;
+      box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05);
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow-y: auto; /* Allow scrolling if controls are too long */
+    }
+
+    h2, h3 {
+      margin-top: 15px;
+      color: #333;
+    }
+    
+    .matrix-vector-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 25px;
+      margin-top: 10px;
+    }
+
+    .matrix-container {
+      display: inline-grid;
+      grid-template-columns: repeat(2, 70px);
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    .vector-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    input[type="number"] {
+      width: 70px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      text-align: right;
+    }
+
+    /* ----------------------------------- */
+    /* BUTTONS & INFO */
+    /* ----------------------------------- */
+    #buttons-container {
+      display: flex;
+      flex-wrap: wrap; 
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px 15px;
+      border: none;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+      min-width: 100px;
+    }
+
+    #animate-btn { background-color: #007bff; }
+    #animate-btn:hover { background-color: #0056b3; }
+    #eigen-btn { background-color: #28a745; }
+    #eigen-btn:hover { background-color: #1e7e34; }
+    #reset-btn { background-color: #6c757d; }
+    #reset-btn:hover { background-color: #5a6268; }
+    #full-reset-btn { background-color: #dc3545; }
+    #full-reset-btn:hover { background-color: #c82333; }
+
+    #eigen-info {
+      background-color: #eef7ff;
+      border: 1px solid #b3d9ff;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+
+    /* ----------------------------------- */
+    /* CANVAS */
+    /* ----------------------------------- */
+    #canvas-container {
+      flex-grow: 1; /* Allow container to take remaining space */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      min-width: 0; /* Necessary for flex item resizing */
+    }
+
+    canvas {
+      background-color: #fff;
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+  </style>
+
+  <script>
+    // MathJax configuration
+    window.MathJax = {
+      tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
+      svg: { fontCache: "global" },
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+  <div id="controls">
+    <h2>Transformation Inputs</h2>
+
+    <div class="matrix-vector-section">
+      <div>
+        <label>Matrix $\mathbf{A}$ (2×2)</label>
+        <div class="matrix-container">
+          <input type="number" id="a11" value="1" step="0.1" title="a11" />
+          <input type="number" id="a12" value="1" step="0.1" title="a12" />
+          <input type="number" id="a21" value="0" step="0.1" title="a21" />
+          <input type="number" id="a22" value="1" step="0.1" title="a22" />
+        </div>
+      </div>
+
+      <div>
+        <label>Vector $\mathbf{v}$ (2D)</label>
+        <div class="vector-container">
+          <input type="number" id="vx" value="2" step="0.1" title="vx" />
+          <input type="number" id="vy" value="1" step="0.1" title="vy" />
+        </div>
+      </div>
+    </div>
+
+    <div id="buttons-container">
+      <button id="animate-btn" onclick="startTransformation()">Transform</button>
+      <button id="eigen-btn" onclick="calculateAndDisplayEigenvectors()">Find Eigenvectors</button>
+      <button id="reset-btn" onclick="resetVisualization()">Reset View</button>
+      <button id="full-reset-btn" onclick="fullReset()">Full Reset</button>
+    </div>
+
+    <hr />
+
+    <h3>Eigen Analysis</h3>
+    <div id="eigen-info">Eigenvectors will appear here.</div>
+  </div>
+
+  <div id="canvas-container">
+    <canvas id="transformCanvas" width="600" height="600"></canvas>
+  </div>
+
+  <script >
+  // --- Global Variables and Setup ---
+        const canvas = document.getElementById('transformCanvas');
+        const ctx = canvas.getContext('2d');
+        // Initial setup uses variables that will be dynamically updated
+        let W = 600; 
+        let H = 600;
+        const DURATION = 2000;
+        let animationStartTime = null;
+        let animationFrameId = null; 
+        let currentEigenvectors = null; 
+
+        // --- VIEWPORT CONTROLS ---
+        let currentScale = 50; 
+        let offsetX = W / 2;
+        let offsetY = H / 2;
+        let isPanning = false;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        let isTransformed = false;
+
+        // --- FUNCTION TO HANDLE RESIZING ---
+        function resizeCanvas() {
+            const container = document.getElementById('canvas-container');
+            const size = Math.min(container.clientWidth, container.clientHeight) - 20; // Use minimum of width/height, minus padding
+            
+            // Set new global dimensions
+            W = size;
+            H = size;
+
+            // Update canvas element dimensions
+            canvas.width = W;
+            canvas.height = H;
+
+            // Recalculate offsets based on new center
+            offsetX = W / 2;
+            offsetY = H / 2;
+            
+            // Redraw the visualization in the new dimensions
+            redrawView();
+        }
+
+        // Attach resize handler
+        window.onresize = resizeCanvas;
+        // -------------------------------------
+
+        // --- Math Utilities ---
+
+        function multiplyMatrixVector(A, v) {
+            const x = A[0][0] * v.x + A[0][1] * v.y;
+            const y = A[1][0] * v.x + A[1][1] * v.y;
+            return { x, y };
+        }
+
+        function determinant(A) {
+            return A[0][0] * A[1][1] - A[0][1] * A[1][0];
+        }
+
+        function inverseMatrix(A) {
+            const det = determinant(A);
+            if (Math.abs(det) < 1e-6) { return null; }
+            const inv_det = 1 / det;
+            return [
+                [A[1][1] * inv_det, -A[0][1] * inv_det],
+                [-A[1][0] * inv_det, A[0][0] * inv_det]
+            ];
+        }
+        
+        function getInterpolatedMatrix(A, t) {
+            return [
+                [1 + t * (A[0][0] - 1), t * A[0][1]],
+                [t * A[1][0], 1 + t * (A[1][1] - 1)]
+            ];
+        }
+
+        function normalize(v) {
+            const len = Math.sqrt(v.x * v.x + v.y * v.y);
+            if (len < 1e-6) return { x: 0, y: 0 };
+            return { x: v.x / len, y: v.y / len };
+        }
+
+        function toCanvasCoords(x, y) {
+            return {
+                px: offsetX + x * currentScale,
+                py: offsetY - y * currentScale 
+            };
+        }
+
+        function fromCanvasCoords(px, py) {
+            return {
+                x: (px - offsetX) / currentScale,
+                y: (offsetY - py) / currentScale 
+            };
+        }
+
+        function drawVector(x, y, color, label = '') {
+            const start = toCanvasCoords(0, 0);
+            const end = toCanvasCoords(x, y);
+
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(start.px, start.py);
+            ctx.lineTo(end.px, end.py);
+            ctx.stroke();
+
+            const angle = Math.atan2(end.py - start.py, end.px - start.px);
+            const headLen = 10;
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(end.px, end.py);
+            ctx.lineTo(end.px - headLen * Math.cos(angle - Math.PI / 6), end.py - headLen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(end.px - headLen * Math.cos(angle + Math.PI / 6), end.py - headLen * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+            
+            if (label) {
+                 ctx.fillStyle = color;
+                 ctx.font = '14px sans-serif';
+                 ctx.fillText(label, end.px + 5 * Math.cos(angle) + 5, end.py + 5 * Math.sin(angle) - 5);
+            }
+        }
+        
+        // --- Eigenvector Calculation ---
+        function calculateEigenvectors(A) {
+            const a = A[0][0]; const b = A[0][1];
+            const c = A[1][0]; const d = A[1][1];
+            const trace = a + d;
+            const det = a * d - b * c;
+            const discriminant = trace * trace - 4 * det;
+            const eigenvectors = [];
+            let info = '';
+
+            function findOneEigenvector(lambda) {
+                const m11 = a - lambda; const m12 = b;
+                const m21 = c; const m22 = d - lambda;
+                
+                let vx, vy;
+                
+                const m12_abs = Math.abs(m12);
+                
+                if (m12_abs > 1e-6) {
+                    vx = -m12;
+                    vy = m11;
+                } else if (Math.abs(m11) > 1e-6) {
+                    vx = -m12;
+                    vy = m11;
+                }
+                else if (Math.abs(m21) > 1e-6 || Math.abs(m22) > 1e-6) {
+                    vx = -m22;
+                    vy = m21;
+                }
+                else {
+                    vx = 1; 
+                    vy = 0;
+                }
+                
+                return { x: vx, y: vy };
+            }
+            
+            if (discriminant < -1e-6) {
+                info = "Eigenvalues are <b>complex</b> (no real eigenvectors, typically rotation/spiral).";
+            } 
+            else {
+                const sqrt_disc = Math.sqrt(Math.max(0, discriminant));
+                const lambda1 = (trace + sqrt_disc) / 2;
+                const lambda2 = (trace - sqrt_disc) / 2;
+                
+                let v1_raw = findOneEigenvector(lambda1);
+                let v1 = normalize(v1_raw);
+                if (v1.x !== 0 || v1.y !== 0) {
+                    eigenvectors.push({ x: v1.x, y: v1.y, lambda: lambda1, color: 'green', label: 'v1' });
+                }
+                
+                if (Math.abs(lambda1 - lambda2) > 1e-6) {
+                    info = `<b>Distinct Real Eigenvalues</b> <br> (\\(\\lambda_1 = ${lambda1.toFixed(3)}\\), \\(\\lambda_2 = ${lambda2.toFixed(3)}\\))`;
+                    
+                    let v2_raw = findOneEigenvector(lambda2);
+                    let v2 = normalize(v2_raw);
+                    if (v2.x !== 0 || v2.y !== 0) { 
+                        if (Math.abs(v1.x * v2.y - v1.y * v2.x) > 1e-6) { 
+                            eigenvectors.push({ x: v2.x, y: v2.y, lambda: lambda2, color: 'cyan', label: 'v2' });
+                        }
+                    }
+                } 
+                else {
+                    info = `<b>Repeated Real Eigenvalue</b> <br> (\\(\\lambda = ${lambda1.toFixed(3)}\\))`;
+                    
+                    if (Math.abs(a - lambda1) < 1e-6 && Math.abs(b) < 1e-6 && Math.abs(c) < 1e-6 && Math.abs(d - lambda1) < 1e-6) {
+                         info += ": Two L.I. Eigenvectors (Identity-like).";
+                         eigenvectors.push({ x: 0, y: 1, lambda: lambda1, color: 'cyan', label: 'v2' }); 
+                    } else {
+                         info += ": Only one L.I. Eigenvector (Defective/Shear-like).";
+                    }
+                }
+            }
+            
+            let display = `<h4>${info}</h4>`;
+            if (eigenvectors.length >= 1) {
+                display += `<span style="color: green;">$v_1$ </span> (\\(\\lambda_1 = ${eigenvectors[0].lambda.toFixed(3)}\\)): (\\(${eigenvectors[0].x.toFixed(2)}\\), \\(${eigenvectors[0].y.toFixed(2)}\\)) <br>`;
+            }
+            if (eigenvectors.length === 2) {
+                display += `<span style="color: cyan;">$v_2$ </span> (\\(\\lambda_2 = ${eigenvectors[1].lambda.toFixed(3)}\\)): (\\(${eigenvectors[1].x.toFixed(2)}\\), \\(${eigenvectors[1].y.toFixed(2)}\\))`;
+            }
+            document.getElementById('eigen-info').innerHTML = display;
+            
+            if (window.MathJax) {
+                MathJax.typeset([document.getElementById('eigen-info')]);
+            }
+            
+            return eigenvectors;
+        }
+
+
+        // --- Drawing and Animation Logic ---
+
+        function drawGrid(A, t, v, eigenvectors) { 
+            const isAnimating = animationFrameId !== null && animationStartTime !== null;
+            
+            let matrixToDraw;
+            
+            if (isAnimating) {
+                matrixToDraw = getInterpolatedMatrix(A, t);
+            } else if (isTransformed) {
+                matrixToDraw = A;
+            } else {
+                matrixToDraw = [[1, 0], [0, 1]];
+            }
+            
+            const invA = inverseMatrix(matrixToDraw);
+            const isSingular = invA === null;
+
+            ctx.clearRect(0, 0, W, H);
+
+            if (isSingular) {
+                ctx.fillStyle = 'red';
+                ctx.font = '20px sans-serif';
+                ctx.fillText('WARNING: Singular Matrix (det=0). Space collapses to a line.', 10, 30);
+            }
+            
+            // --- Determine Grid Range and Matrix to Use ---
+            let rangeX, rangeY;
+            let matrixForDrawing = matrixToDraw;
+
+            if (isSingular) {
+                rangeX = { min: -4, max: 4 };
+                rangeY = { min: -4, max: 4 };
+            } else {
+                // Normal Viewport Filling Logic
+                const canvasCorners = [
+                    fromCanvasCoords(0, 0), fromCanvasCoords(W, 0),
+                    fromCanvasCoords(0, H), fromCanvasCoords(W, H)
+                ];
+
+                let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+
+                for (const corner of canvasCorners) {
+                    const originalV = multiplyMatrixVector(invA, corner);
+                    minX = Math.min(minX, originalV.x);
+                    maxX = Math.max(maxX, originalV.x);
+                    minY = Math.min(minY, originalV.y);
+                    maxY = Math.max(maxY, originalV.y);
+                }
+                
+                rangeX = { min: Math.floor(minX) - 1, max: Math.ceil(maxX) + 1 };
+                rangeY = { min: Math.floor(minY) - 1, max: Math.ceil(maxY) + 1 };
+            }
+
+
+            ctx.strokeStyle = isSingular ? '#ff8888' : '#ccc'; 
+            ctx.lineWidth = 1;
+
+            // 2. Draw Vertical grid lines
+            for (let x = rangeX.min; x <= rangeX.max; x++) {
+                let p1 = multiplyMatrixVector(matrixForDrawing, { x: x, y: rangeY.min });
+                let p2 = multiplyMatrixVector(matrixForDrawing, { x: x, y: rangeY.max });
+                let c1 = toCanvasCoords(p1.x, p1.y);
+                let c2 = toCanvasCoords(p2.x, p2.y);
+                
+                ctx.beginPath();
+                ctx.moveTo(c1.px, c1.py);
+                ctx.lineTo(c2.px, c2.py);
+                ctx.stroke();
+            }
+
+            // 3. Draw Horizontal grid lines
+            for (let y = rangeY.min; y <= rangeY.max; y++) {
+                let p1 = multiplyMatrixVector(matrixForDrawing, { x: rangeX.min, y: y });
+                let p2 = multiplyMatrixVector(matrixForDrawing, { x: rangeX.max, y: y });
+                let c1 = toCanvasCoords(p1.x, p1.y);
+                let c2 = toCanvasCoords(p2.x, p2.y); 
+                
+                ctx.beginPath();
+                ctx.moveTo(c1.px, c1.py);
+                ctx.lineTo(c2.px, c2.py);
+                ctx.stroke();
+            }
+            
+            // 4. Draw transformed basis vectors
+            const transformed_i = { x: matrixForDrawing[0][0], y: matrixForDrawing[1][0] };
+            const transformed_j = { x: matrixForDrawing[0][1], y: matrixForDrawing[1][1] };
+            drawVector(transformed_i.x, transformed_i.y, 'red', 'i'); 
+            drawVector(transformed_j.x, transformed_j.y, 'blue', 'j'); 
+            
+            // 5. Draw static components (User vector 'v' and Eigenvectors)
+            if (!isAnimating) {
+                const input = getInputs();
+                
+                const static_v = multiplyMatrixVector(matrixForDrawing, input.v);
+                drawVector(static_v.x, static_v.y, 'magenta', 'v');
+
+                 if (eigenvectors) {
+                    for (const eigen of eigenvectors) {
+                        const static_eigen = multiplyMatrixVector(matrixForDrawing, { x: eigen.x, y: eigen.y });
+                        drawVector(static_eigen.x * 3, static_eigen.y * 3, eigen.color, eigen.label); 
+                    }
+                 }
+            }
+        }
+
+        function animate(timestamp, A, v, eigenvectors) {
+            if (!animationStartTime) animationStartTime = timestamp;
+            const elapsed = timestamp - animationStartTime;
+            
+            let t = elapsed / DURATION;
+            if (t > 1) t = 1;
+
+            drawGrid(A, t, v, null); 
+
+            // Interpolated vectors
+            if (eigenvectors) {
+                for (const eigen of eigenvectors) {
+                    const scale_factor = 1 + t * (eigen.lambda - 1);
+                    const transformedEigen = {
+                        x: eigen.x * scale_factor * 3, 
+                        y: eigen.y * scale_factor * 3
+                    };
+                    drawVector(transformedEigen.x, transformedEigen.y, eigen.color, eigen.label);
+                }
+            }
+            
+            const transformed_v = multiplyMatrixVector(A, v);
+            const interpolated_v = {
+                x: v.x * (1 - t) + transformed_v.x * t,
+                y: v.y * (1 - t) + transformed_v.y * t
+            };
+            drawVector(interpolated_v.x, interpolated_v.y, 'magenta', t < 1 ? 'v(t)' : 'Av');
+
+            if (t < 1) {
+                animationFrameId = requestAnimationFrame(ts => animate(ts, A, v, eigenvectors));
+            } else {
+                animationStartTime = null; 
+                isTransformed = true; 
+                
+                redrawView();
+            }
+        }
+
+        // --- Viewport Control Handlers ---
+
+        function redrawView() {
+            if (animationFrameId !== null) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+                animationStartTime = null;
+            }
+            
+            const { A, v } = getInputs();
+            drawGrid(A, 0, v, currentEigenvectors); 
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            if (e.button === 0) { 
+                isPanning = true;
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+            
+            const dx = e.clientX - lastMouseX;
+            const dy = e.clientY - lastMouseY;
+
+            offsetX += dx;
+            offsetY += dy;
+
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+
+            redrawView();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isPanning = false;
+        });
+        
+        canvas.addEventListener('mouseout', () => {
+            isPanning = false;
+        });
+
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            const zoomFactor = 1.1; 
+            const oldScale = currentScale;
+            
+            if (e.deltaY < 0) { 
+                currentScale *= zoomFactor;
+            } else { 
+                currentScale /= zoomFactor;
+            }
+            
+            currentScale = Math.max(5, Math.min(500, currentScale)); 
+
+            const mouseX = e.clientX - canvas.getBoundingClientRect().left;
+            const mouseY = e.clientY - canvas.getBoundingClientRect().top;
+
+            offsetX = mouseX - (mouseX - offsetX) * (currentScale / oldScale);
+            offsetY = mouseY - (mouseY - offsetY) * (currentScale / oldScale);
+
+            redrawView();
+        });
+
+
+        // --- Main Control Functions ---
+
+        function getInputs() {
+             const A = [
+                [parseFloat(document.getElementById('a11').value), parseFloat(document.getElementById('a12').value)],
+                [parseFloat(document.getElementById('a21').value), parseFloat(document.getElementById('a22').value)]
+            ];
+            const v = {
+                x: parseFloat(document.getElementById('vx').value),
+                y: parseFloat(document.getElementById('vy').value)
+            };
+            return { A, v };
+        }
+
+        function calculateAndDisplayEigenvectors() {
+            const { A, v } = getInputs();
+
+            if (animationFrameId !== null) {
+                cancelAnimationFrame(animationFrameId);
+                animationStartTime = null;
+                animationFrameId = null;
+            }
+            
+            currentEigenvectors = calculateEigenvectors(A);
+            isTransformed = false; // Must be canonical view
+            
+            drawGrid(A, 0, v, currentEigenvectors);
+        }
+
+        function startTransformation() {
+            const { A, v } = getInputs();
+
+            if (currentEigenvectors === null) {
+                currentEigenvectors = calculateEigenvectors(A);
+            }
+            
+            if (animationFrameId !== null) {
+                cancelAnimationFrame(animationFrameId);
+                animationStartTime = null;
+            }
+            
+            animationStartTime = null;
+            isTransformed = false; // Must be canonical view at start
+            animationFrameId = requestAnimationFrame(ts => animate(ts, A, v, currentEigenvectors));
+        }
+        
+        function resetVisualization() {
+            if (animationFrameId !== null) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+                animationStartTime = null;
+            }
+            
+            const { A, v } = getInputs();
+            isTransformed = false; // Must be canonical view
+            
+            drawGrid(A, 0, v, currentEigenvectors);
+            
+            document.getElementById('eigen-info').innerHTML = "View reset to original (untransformed) state for the current matrix. Eigenvectors are still available.";
+        }
+
+        function fullReset() {
+            if (animationFrameId !== null) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+                animationStartTime = null;
+            }
+            
+            // Reset Viewport state
+            currentScale = 50; 
+            offsetX = W / 2;
+            offsetY = H / 2;
+            isTransformed = false;
+
+            // Reset input values
+            document.getElementById('a11').value = 1;
+            document.getElementById('a12').value = 0;
+            document.getElementById('a21').value = 0;
+            document.getElementById('a22').value = 1;
+            document.getElementById('vx').value = 2;
+            document.getElementById('vy').value = 1;
+
+            currentEigenvectors = null;
+            
+            initialize();
+            
+            document.getElementById('eigen-info').innerHTML = "Full Reset: Inputs set to Identity $\\mathbf{I}$. Click 'Find Eigenvectors' to re-run analysis.";
+        }
+
+
+        function initialize() {
+            const { A, v } = getInputs();
+            
+            // --- ATTACH RESIZE HANDLER ---
+            window.onresize = resizeCanvas;
+            resizeCanvas(); // Initial call to set size
+            // -----------------------------
+            
+            drawGrid(A, 0, v, null);
+            
+            currentEigenvectors = null;
+            document.getElementById('eigen-info').innerHTML = "Enter a matrix. Click 'Find Eigenvectors' to view analysis or 'Transform' to start transformation. Use mouse wheel to zoom and left-click drag to pan the view.";
+        }
+        
+        // --- FUNCTION TO HANDLE RESIZING (Moved outside initialize) ---
+        function resizeCanvas() {
+            const container = document.getElementById('canvas-container');
+            const size = Math.min(container.clientWidth, container.clientHeight) - 20; // Use minimum of width/height, minus padding
+            
+            // Set new global dimensions
+            W = size;
+            H = size;
+
+            // Update canvas element dimensions
+            canvas.width = W;
+            canvas.height = H;
+
+            // Recalculate offsets based on new center
+            // NOTE: Keeping the current offset is complex, so we reset to center on resize for simplicity
+            offsetX = W / 2;
+            offsetY = H / 2;
+            
+            // Redraw the visualization in the new dimensions
+            redrawView();
+        }
+        // -------------------------------------------------------------
+        
+        window.onload = initialize;
+  </script>
+</body>
+</html>
